@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../Documents/GIT/Project-Mobius/Project Mobius/Assets/player_main.cs">
+    <Files>
+      <File FileName="../Documents/GIT/Project-Mobius/Project Mobius/Assets/beatBouncer.cs" Line="6" Column="9" />
+      <File FileName="../Documents/GIT/Project-Mobius/Project Mobius/Assets/player_main.cs" Line="23" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
