@@ -8,8 +8,10 @@ public class beatBouncer : MonoBehaviour
 	public int
 		flip;
 	public float distance = 25.0f;
+	public bool p1;
 	public bool moving;
 	private Collider2D matchedBeat = null;
+	private KeyCode launch;
 	bool hollow;
 	public float speed = .05f;
 	public float returnSpeedModifier = .25f;
@@ -17,6 +19,7 @@ public class beatBouncer : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		launch = KeyCode.G;
 		moving = false;
 		hollow = true;
 		startPosition = gameObject.transform.position;
@@ -31,7 +34,7 @@ public class beatBouncer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (/*Input.GetMouseButtonDown (0)*/ Input.GetKeyDown(KeyCode.G)&& !moving)
+		if (/*Input.GetMouseButtonDown (0)*/ Input.GetKeyDown(launch)&& !moving)
         {
             /*
 			if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition))) {
