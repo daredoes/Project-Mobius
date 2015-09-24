@@ -54,6 +54,10 @@
      <Compile Include="Assets\Scripts\godly.cs" />
      <Compile Include="Assets\Scripts\player_main.cs" />
      <Compile Include="Assets\Scripts\settings.cs" />
+<<<<<<< Updated upstream
+=======
+     <Compile Include="Assets\UIHandler.cs" />
+>>>>>>> Stashed changes
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
