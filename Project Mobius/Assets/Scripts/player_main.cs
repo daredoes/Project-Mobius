@@ -1,11 +1,12 @@
 using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 
 public class player_main : MonoBehaviour
 {
 	private GameObject[] beatBars;
-	private Vector2 middleBeatPosition = new Vector2(0, -1);
-	private float howBarApart = 2.0f;
+	public List<KeyCode> keys;
+	public static float howBarApart = 2.0f;
 
     // Before Start function
     void Awake()

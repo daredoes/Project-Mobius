@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject button;
 
     //Bar Prefab
-    public GameObject bar;
+	public GameObject bar;
 
     //Reference to Button Selection Panel/other UI elements to toggle on and off
     public GameObject ButtonCountSelectPanel;
@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     //Center X position for beats
     public int centerX = 0;
+
+	public Vector2 centerPos = new Vector2 (0, 0);
 
     public int barDistance = 10;
 

@@ -5,24 +5,22 @@ public class beatBouncer : MonoBehaviour
 {
 	//flip = -1 (Moves down) flip = 1 (Moves up)
 	[Range(-1, 1)]
-	public int
-		flip;
-	public static float distance = 25.0f;
+	public int flip;
+	private float distance = 1.0f;
 	public bool p1;
 	public bool moving;
 	private Collider2D matchedBeat = null;
-	private KeyCode launch;
+	public KeyCode launch = KeyCode.G;
 	bool hollow;
-	public float speed = .05f;
-	public float returnSpeedModifier = .25f;
-	private Vector2 startPosition;
+	private static float speed = .05f;
+	//Higher = Faster, Lower = Slower
+	private static float returnSpeedModifier = .5f;
+	public Vector2 startPosition;
 	// Use this for initialization
 	void Start ()
 	{
-		launch = KeyCode.G;
 		moving = false;
 		hollow = true;
-		startPosition = gameObject.transform.position;
         if (p1)
         {
             flip = 1;
@@ -32,6 +30,23 @@ public class beatBouncer : MonoBehaviour
             flip = -1;
         }
 
+	}
+
+	void Awake(){
+		startPosition = transform.position;
+	}
+
+	void spawned(){
+		startPosition = transform.position;
+		distance = Mathf.Abs(GameManager.gm.centerPos.y - startPosition.y);
+		if (p1)
+		{
+			flip = 1;
+		}
+		else
+		{
+			flip = -1;
+		}
 	}
 
 	public bool isAtStart ()
