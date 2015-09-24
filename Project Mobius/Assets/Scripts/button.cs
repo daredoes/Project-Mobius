@@ -15,14 +15,15 @@ public class button : MonoBehaviour {
 		gameObject.GetComponent<Button> ().onClick.AddListener (() => {
 			shootBar();
 		});
+		if(beatBar == null && GameManager.gm != null){
+			getBeatBar();
+		}
 
 	
 	}
 
 	void Awake() {
-		if(beatBar == null){
-			getBeatBar();
-		}
+
 	}
 
 	void spawned(){

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager gm;
+    public static GameManager gm = null;
 
     //Button Prefab
     public GameObject button;
@@ -42,8 +42,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+		gm = this;
         ButtonCountSelectPanel.SetActive(true);
-        gm = this;
 
         Buttons = new List<GameObject>();
         Bars = new List<GameObject>();
