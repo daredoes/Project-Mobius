@@ -7,7 +7,7 @@ public class beatBouncer : MonoBehaviour
 	[Range(-1, 1)]
 	public int
 		flip;
-	public float distance = 25.0f;
+	public static float distance = 25.0f;
 	public bool p1;
 	public bool moving;
 	private Collider2D matchedBeat = null;
@@ -23,6 +23,14 @@ public class beatBouncer : MonoBehaviour
 		moving = false;
 		hollow = true;
 		startPosition = gameObject.transform.position;
+        if (p1)
+        {
+            flip = 1;
+        }
+        else
+        {
+            flip = -1;
+        }
 
 	}
 
