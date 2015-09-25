@@ -15,11 +15,12 @@ public class player_main : MonoBehaviour
     // Before Start function
     void Awake()
     {
-
+		//gameObject.GetComponent<SpriteRenderer> ().color = color;
     }
 
     // Use this for initialization
     void Start () {
+
 
 	}
 	
