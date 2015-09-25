@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -8,10 +8,15 @@ public class button : MonoBehaviour {
 	public GameObject beatBar = null;
 	public GameObject beatFab;
 	public static float barDist = 0.5f;
+    public Camera mainCamera;
 
+    void Awake()
+    {
+        mainCamera = Camera.main;
+    }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		gameObject.GetComponent<Button> ().onClick.AddListener (() => {
 			shootBar();
 		});
@@ -22,9 +27,6 @@ public class button : MonoBehaviour {
 	
 	}
 
-	void Awake() {
-
-	}
 
 	void spawned(){
 
@@ -47,7 +49,7 @@ public class button : MonoBehaviour {
 	}
 
 	void spawnBar(int aboveBelow){
-		beatBar.transform.position = new Vector3 (transform.position.x, transform.position.y + (barDist * aboveBelow), transform.position.z);
+		beatBar.transform.position = new Vector3 (mainCamera.ScreenToWorldPoint(this.transform.) transform.position.x, transform.position.y + (barDist * aboveBelow), transform.position.z);
 		beatBar.GetComponent<beatBouncer>().p1 = p1;
 		//beatBar.GetComponent<beatBouncer>().launch = launch;
 		beatBar.GetComponent<beatBouncer>().spawned();
