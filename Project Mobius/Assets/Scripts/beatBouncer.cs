@@ -35,7 +35,7 @@ public class beatBouncer : MonoBehaviour
 		startPosition = transform.position;
 	}
 
-	void spawned(){
+	public void spawned(){
 		startPosition = transform.position;
 		distance = Mathf.Abs(GameManager.gm.centerPos.y - startPosition.y);
 		if (p1)
@@ -90,7 +90,7 @@ public class beatBouncer : MonoBehaviour
 				matchedBeat = other.gameObject.GetComponent<Collider2D>();
 			}
 			if (!hollow) {
-				other.gameObject.SendMessage ("bounce");
+				other.gameObject.GetComponent<beat_init>().bounce();
 			}
 			else{
 				Physics2D.IgnoreCollision(other.transform.GetComponent<Collider2D>(), GetComponent<Collider2D>());

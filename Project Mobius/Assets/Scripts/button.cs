@@ -31,7 +31,7 @@ public class button : MonoBehaviour {
 	}
 
 	void shootBar(){
-		beatBar.SendMessage ("hit");
+		beatBar.GetComponent<beatBouncer>().hit();
 
 	}
 
@@ -50,7 +50,7 @@ public class button : MonoBehaviour {
 		beatBar.transform.position = new Vector3 (transform.position.x, transform.position.y + (barDist * aboveBelow), transform.position.z);
 		beatBar.GetComponent<beatBouncer>().p1 = p1;
 		//beatBar.GetComponent<beatBouncer>().launch = launch;
-		beatBar.SendMessage("spawned");
+		beatBar.GetComponent<beatBouncer>().spawned();
 	}
 
 	// Update is called once per frame

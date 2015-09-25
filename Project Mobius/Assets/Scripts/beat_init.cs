@@ -48,7 +48,7 @@ public class beat_init : MonoBehaviour
 	
 	}
 
-	void bounce ()
+	public void bounce ()
 	{
 		flip = !flip;
 		Vector3 temp = gameObject.transform.localScale;
