@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 	public GameObject playerTwo;
 
 	public int score;
-	public float seperatorIncrement = .125f;
+	public float seperatorIncrement = .025f;
 	//public music audioTtrack;
 	public bool online;
 	public Vector2 centerPos = new Vector2 (0, 0);
@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
 
     //A list to store the instantiated Buttons and Bars
     public List<GameObject> Buttons;
+	public List<GameObject> ButtonsP1;
+	public List<GameObject> ButtonsP2;
     public List<GameObject> Bars;
 
     //Max amount of Buttons and Bars allowed in a scene
@@ -52,6 +54,8 @@ public class GameManager : MonoBehaviour
         ButtonCountSelectPanel.SetActive(true);
 
         Buttons = new List<GameObject>();
+		ButtonsP1 = new List<GameObject> ();
+		ButtonsP2 = new List<GameObject> ();
         Bars = new List<GameObject>();
 
         //Object Pooling at the start of the Game
@@ -67,7 +71,12 @@ public class GameManager : MonoBehaviour
         {
             GameObject _button = (GameObject)Instantiate(button);
             _button.SetActive(false);
-            Buttons.Add(_button);
+			if(i % 2 == 0){
+				ButtonsP1.Add(_button);
+			}else{
+				ButtonsP2.Add(_button);
+			}
+            
         }
     }
 
@@ -140,6 +149,43 @@ public class GameManager : MonoBehaviour
         }
         return null;
     }
+
+	public GameObject GetButtons()
+	{
+		for (int i = 0; i < Buttons.Count; i++)
+		{
+			if (!Buttons[i].activeInHierarchy)
+			{
+				return Buttons[i];
+			}
+		}
+		return null;
+	}
+
+	public GameObject GetButtonsP1()
+	{
+		for (int i = 0; i < ButtonsP1.Count; i++)
+		{
+			if (!ButtonsP1[i].activeInHierarchy)
+			{
+				return ButtonsP1[i];
+			}
+		}
+		return null;
+	}
+
+	public GameObject GetButtonsP2()
+	{
+		for (int i = 0; i < ButtonsP2.Count; i++)
+		{
+			if (!ButtonsP2[i].activeInHierarchy)
+			{
+				return ButtonsP2[i];
+			}
+		}
+		return null;
+	}
+
     void GenerateScene(int numButtons)
     {
         //If we were working with the UI only but were working in world space
@@ -158,6 +204,19 @@ public class GameManager : MonoBehaviour
 			objTemp.transform.position = centerPos + new Vector2(seperatorIncrement * count * flip, 0);
 			objTemp.transform.rotation = transform.rotation;
 
+			objTemp.SetActive(true);
+
+			objTemp = GetButtonsP1();
+			objTemp.transform.position = centerP1 + new Vector2(seperatorIncrement * count * flip, 0);
+			objTemp.transform.rotation = transform.rotation;
+			objTemp.gameObject.GetComponent<button>().p1 = true;
+			objTemp.SetActive(true);
+
+			objTemp = GetButtonsP2();
+			objTemp.transform.position = centerP2 + new Vector2(seperatorIncrement * count * flip, 0);
+			objTemp.transform.rotation = transform.rotation;
+			objTemp.gameObject.GetComponent<button>().p1 = true;
+			
 			objTemp.SetActive(true);
 
 			if(count == 0){
