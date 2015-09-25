@@ -38,18 +38,19 @@ public class button : MonoBehaviour {
 	void getBeatBar(){
 		beatBar = (GameObject)Instantiate (beatFab);
 		if (p1) {
-			beatBar.transform.position = new Vector3 (transform.position.x, transform.position.y + (barDist * 1), transform.position.z);
-			beatBar.GetComponent<beatBouncer>().p1 = p1;
-			//beatBar.GetComponent<beatBouncer>().launch = launch;
-			beatBar.SendMessage("spawned");
+			spawnBar (1);
 		} 
 		else {
-			beatBar.transform.position = new Vector3 (transform.position.x, transform.position.y + (barDist * -1), transform.position.z);
-			beatBar.GetComponent<beatBouncer>().p1 = p1;
-			//beatBar.GetComponent<beatBouncer>().launch = launch;
-			beatBar.SendMessage("spawned");
+			spawnBar(-1);
 
 		}
+	}
+
+	void spawnBar(int aboveBelow){
+		beatBar.transform.position = new Vector3 (transform.position.x, transform.position.y + (barDist * aboveBelow), transform.position.z);
+		beatBar.GetComponent<beatBouncer>().p1 = p1;
+		//beatBar.GetComponent<beatBouncer>().launch = launch;
+		beatBar.SendMessage("spawned");
 	}
 
 	// Update is called once per frame
