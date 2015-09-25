@@ -9,6 +9,7 @@ public class beat_init : MonoBehaviour
 	public static float
 		travelLength = 1.0f;
 	Vector2 startPosition;
+	public Color sideColor;
 	[Range(0.0f, .2f)]
 	public float
 		step = .05f;
@@ -23,6 +24,7 @@ public class beat_init : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		gameObject.GetComponent<SpriteRenderer> ().color = sideColor;
 		if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength) {
 			gameObject.transform.position = startPosition;
 		}
