@@ -53,9 +53,12 @@ public class GameManager : MonoBehaviour
 		gm = this;
         ButtonCountSelectPanel.SetActive(true);
 
+
+        ButtonsP1 = new List<GameObject>();
+        ButtonsP2 = new List<GameObject>();
+
+        /*
         Buttons = new List<GameObject>();
-		ButtonsP1 = new List<GameObject> ();
-		ButtonsP2 = new List<GameObject> ();
         Bars = new List<GameObject>();
 
         //Object Pooling at the start of the Game
@@ -78,6 +81,7 @@ public class GameManager : MonoBehaviour
 			}
             
         }
+        */
     }
 
 	void Start ()
@@ -97,13 +101,9 @@ public class GameManager : MonoBehaviour
     public void One()
     {
         ButtonCount = 1;
-
-        GenerateScene(ButtonCount);
-
+        DrawScene(ButtonCount, playerOne, playerTwo);
+        //GenerateScene(ButtonCount);
         ButtonCountSelectPanel.SetActive(false);
-        OneUI.SetActive(true);
-        ThreeUI.SetActive(false);
-        fiveUI.SetActive(false);
     }
 
 
@@ -113,13 +113,9 @@ public class GameManager : MonoBehaviour
     public void Two()
     {
         ButtonCount = 3;
-
-        GenerateScene(ButtonCount);
-
+        DrawScene(ButtonCount, playerOne, playerTwo);
+        //GenerateScene(ButtonCount);
         ButtonCountSelectPanel.SetActive(false);
-        OneUI.SetActive(false);
-        ThreeUI.SetActive(true);
-        fiveUI.SetActive(false);
     }
 
 
@@ -129,14 +125,28 @@ public class GameManager : MonoBehaviour
     public void Three()
     {
         ButtonCount = 5;
-
-        GenerateScene(ButtonCount);
-
+        DrawScene(ButtonCount, playerOne, playerTwo);
+        //GenerateScene(ButtonCount);
         ButtonCountSelectPanel.SetActive(false);
-        OneUI.SetActive(false);
-        ThreeUI.SetActive(false);
-        fiveUI.SetActive(true);
     }
+
+    public void DrawScene(int buttonAmount, GameObject p1, GameObject p2)
+    {
+        //Creating Buttons for PLAYER ONE
+        for (int i = 0; i < buttonAmount; i++)
+        {
+            GameObject _button = (GameObject)Instantiate(button);
+            _button.transform.SetParent(p1.transform, false);
+        }
+
+        //Creating Buttons for PLAYER TWO
+        for (int i = 0; i < buttonAmount; i++)
+        {
+            GameObject _button = (GameObject)Instantiate(button);
+            _button.transform.SetParent(p2.transform, false);
+        }
+    }
+
 
     public GameObject GetBars()
     {
@@ -188,14 +198,6 @@ public class GameManager : MonoBehaviour
 
     void GenerateScene(int numButtons)
     {
-        //If we were working with the UI only but were working in world space
-        /*
-        barAndButtonWidth = Screen.width / numButtons;
-        Debug.Log(barAndButtonWidth);
-
-        float barCenterPos = barAndButtonWidth / 2;
-        */
-
 		int flip = 1;
 		int count = 0;
 
@@ -232,49 +234,5 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
-        /*switch(numButtons)
-        {
-            case 1:
-                startx = 0;
-                break;
-            case 3:
-                startx = 2;
-                break;
-            case 5:
-                startx = 3;
-                break;
-            default:
-                startx = 0;
-                break;
-        }
-
-        for (int i = 0; i < numButtons; i++)
-        {
-            GameObject obj = GetBars();
-
-            obj.transform.position = new Vector3(startx, 0, 0);
-            obj.transform.rotation = transform.rotation;
-
-            obj.SetActive(true);
-            //Instantiate<GameObject>(button).transform.position
-
-            switch (numButtons)
-            {
-                case 1:
-                    startx = 0;
-                    break;
-                case 3:
-                    startx -= 2;
-                    break;
-                case 5:
-                    startx -= 1.5f;
-                    break;
-                default:
-                    startx = 0;
-                    break;
-            }
-        } */
     }
-
-    
 }
