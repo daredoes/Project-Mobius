@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 	//public music audioTtrack;
 	public bool online;
 	public Vector2 centerPos = new Vector2 (0, 0);
+	public Vector2 centerP1 = new Vector2 (0, -1);
+	public Vector2 centerP2 = new Vector2(0, 1);
 
     //Button Prefab
     public GameObject button;
@@ -29,9 +31,6 @@ public class GameManager : MonoBehaviour
 
     //How many bars does the player want to use
     public int ButtonCount;
-
-    //Center X position for beats
-    public int centerX = 0;
 
     public int barDistance = 10;
 
