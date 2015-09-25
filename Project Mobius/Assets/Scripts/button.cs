@@ -40,13 +40,13 @@ public class button : MonoBehaviour {
 		if (p1) {
 			beatBar.transform.position = new Vector3 (transform.position.x, transform.position.y + (barDist * 1), transform.position.z);
 			beatBar.GetComponent<beatBouncer>().p1 = p1;
-			beatBar.GetComponent<beatBouncer>().launch = launch;
+			//beatBar.GetComponent<beatBouncer>().launch = launch;
 			beatBar.SendMessage("spawned");
 		} 
 		else {
 			beatBar.transform.position = new Vector3 (transform.position.x, transform.position.y + (barDist * -1), transform.position.z);
 			beatBar.GetComponent<beatBouncer>().p1 = p1;
-			beatBar.GetComponent<beatBouncer>().launch = launch;
+			//beatBar.GetComponent<beatBouncer>().launch = launch;
 			beatBar.SendMessage("spawned");
 
 		}
@@ -54,6 +54,9 @@ public class button : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown (launch)) {
+			shootBar();
+		}
 		/*if (Input.GetMouseButtonDown (0))
 		{
 

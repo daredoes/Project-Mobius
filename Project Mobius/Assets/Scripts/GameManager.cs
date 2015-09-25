@@ -6,6 +6,15 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gm = null;
 
+	public GameObject playerOne;
+	public GameObject playerTwo;
+
+	public int score;
+	public float seperatorIncrement = .125f;
+	//public music audioTtrack;
+	public bool online;
+	public Vector2 centerPos = new Vector2 (0, 0);
+
     //Button Prefab
     public GameObject button;
 
@@ -23,8 +32,6 @@ public class GameManager : MonoBehaviour
 
     //Center X position for beats
     public int centerX = 0;
-
-	public Vector2 centerPos = new Vector2 (0, 0);
 
     public int barDistance = 10;
 
@@ -143,7 +150,31 @@ public class GameManager : MonoBehaviour
 
         float barCenterPos = barAndButtonWidth / 2;
         */
-        switch(numButtons)
+
+		int flip = 1;
+		int count = 0;
+
+		for (int i = 0; i < numButtons; i++) {
+			GameObject objTemp = GetBars();
+			objTemp.transform.position = centerPos + new Vector2(seperatorIncrement * count * flip, 0);
+			objTemp.transform.rotation = transform.rotation;
+
+			objTemp.SetActive(true);
+
+			if(count == 0){
+				count++;
+			}
+			else{
+				if(flip == 1){
+					flip = -1;
+				}
+				else{
+					flip = 1;
+					count++;
+				}
+			}
+		}
+        /*switch(numButtons)
         {
             case 1:
                 startx = 0;
@@ -184,7 +215,7 @@ public class GameManager : MonoBehaviour
                     startx = 0;
                     break;
             }
-        }
+        } */
     }
 
     

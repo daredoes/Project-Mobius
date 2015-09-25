@@ -10,7 +10,6 @@ public class beatBouncer : MonoBehaviour
 	public bool p1;
 	public bool moving;
 	private Collider2D matchedBeat = null;
-	public KeyCode launch = KeyCode.G;
 	bool hollow;
 	private static float speed = .05f;
 	//Higher = Faster, Lower = Slower
@@ -57,19 +56,7 @@ public class beatBouncer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (/*Input.GetMouseButtonDown (0)*/ Input.GetKeyDown(launch)&& !moving)
-        {
-            /*
-			if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition))) {
-				if (isAtStart ()) {
-					moving = true;
-					hollow = false;
-					Physics2D.IgnoreCollision(matchedBeat, GetComponent<Collider2D>(), false);
-				}
-			}
-            */
-            hit();
-		}
+
 		if (moving) {
 			if (flip == 1) {
 				if (gameObject.transform.position.y < startPosition.y + (distance)) {
