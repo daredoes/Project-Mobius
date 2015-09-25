@@ -36,12 +36,6 @@ public class GameManager : MonoBehaviour
 
     public float barAndButtonWidth;
 
-    //A list to store the instantiated Buttons and Bars
-    public List<GameObject> Buttons;
-	public List<GameObject> ButtonsP1;
-	public List<GameObject> ButtonsP2;
-    public List<GameObject> Bars;
-
     //Max amount of Buttons and Bars allowed in a scene
     int maxAmountOfButtons = 10;
     int maxAmountOfBars = 5;
@@ -52,36 +46,6 @@ public class GameManager : MonoBehaviour
     {
 		gm = this;
         ButtonCountSelectPanel.SetActive(true);
-
-
-        ButtonsP1 = new List<GameObject>();
-        ButtonsP2 = new List<GameObject>();
-
-        /*
-        Buttons = new List<GameObject>();
-        Bars = new List<GameObject>();
-
-        //Object Pooling at the start of the Game
-        for (int i = 0; i < maxAmountOfBars; i++)
-        {
-            GameObject _bar = (GameObject)Instantiate(bar);
-            _bar.SetActive(false);
-            Bars.Add(_bar);
-        }
-
-        //Object Pooling at the start of the Game
-        for (int i = 0; i < maxAmountOfButtons; i++)
-        {
-            GameObject _button = (GameObject)Instantiate(button);
-            _button.SetActive(false);
-			if(i % 2 == 0){
-				ButtonsP1.Add(_button);
-			}else{
-				ButtonsP2.Add(_button);
-			}
-            
-        }
-        */
     }
 
 	void Start ()
@@ -102,7 +66,6 @@ public class GameManager : MonoBehaviour
     {
         ButtonCount = 1;
         DrawScene(ButtonCount, playerOne, playerTwo);
-        //GenerateScene(ButtonCount);
         ButtonCountSelectPanel.SetActive(false);
     }
 
@@ -114,7 +77,6 @@ public class GameManager : MonoBehaviour
     {
         ButtonCount = 3;
         DrawScene(ButtonCount, playerOne, playerTwo);
-        //GenerateScene(ButtonCount);
         ButtonCountSelectPanel.SetActive(false);
     }
 
@@ -126,7 +88,6 @@ public class GameManager : MonoBehaviour
     {
         ButtonCount = 5;
         DrawScene(ButtonCount, playerOne, playerTwo);
-        //GenerateScene(ButtonCount);
         ButtonCountSelectPanel.SetActive(false);
     }
 
@@ -145,94 +106,5 @@ public class GameManager : MonoBehaviour
             GameObject _button = (GameObject)Instantiate(button);
             _button.transform.SetParent(p2.transform, false);
         }
-    }
-
-
-    public GameObject GetBars()
-    {
-        for (int i = 0; i < Bars.Count; i++)
-        {
-            if (!Bars[i].activeInHierarchy)
-            {
-                return Bars[i];
-            }
-        }
-        return null;
-    }
-
-	public GameObject GetButtons()
-	{
-		for (int i = 0; i < Buttons.Count; i++)
-		{
-			if (!Buttons[i].activeInHierarchy)
-			{
-				return Buttons[i];
-			}
-		}
-		return null;
-	}
-
-	public GameObject GetButtonsP1()
-	{
-		for (int i = 0; i < ButtonsP1.Count; i++)
-		{
-			if (!ButtonsP1[i].activeInHierarchy)
-			{
-				return ButtonsP1[i];
-			}
-		}
-		return null;
-	}
-
-	public GameObject GetButtonsP2()
-	{
-		for (int i = 0; i < ButtonsP2.Count; i++)
-		{
-			if (!ButtonsP2[i].activeInHierarchy)
-			{
-				return ButtonsP2[i];
-			}
-		}
-		return null;
-	}
-
-    void GenerateScene(int numButtons)
-    {
-		int flip = 1;
-		int count = 0;
-
-		for (int i = 0; i < numButtons; i++) {
-			GameObject objTemp = GetBars();
-			objTemp.transform.position = centerPos + new Vector2(seperatorIncrement * count * flip, 0);
-			objTemp.transform.rotation = transform.rotation;
-
-			objTemp.SetActive(true);
-
-			objTemp = GetButtonsP1();
-			objTemp.transform.position = centerP1 + new Vector2(seperatorIncrement * count * flip, 0);
-			objTemp.transform.rotation = transform.rotation;
-			objTemp.gameObject.GetComponent<button>().p1 = true;
-			objTemp.SetActive(true);
-
-			objTemp = GetButtonsP2();
-			objTemp.transform.position = centerP2 + new Vector2(seperatorIncrement * count * flip, 0);
-			objTemp.transform.rotation = transform.rotation;
-			objTemp.gameObject.GetComponent<button>().p1 = true;
-			
-			objTemp.SetActive(true);
-
-			if(count == 0){
-				count++;
-			}
-			else{
-				if(flip == 1){
-					flip = -1;
-				}
-				else{
-					flip = 1;
-					count++;
-				}
-			}
-		}
     }
 }
