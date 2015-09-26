@@ -18,7 +18,7 @@ public class beat_init : MonoBehaviour
 	void Start ()
 	{
 		startPosition = gameObject.transform.position;
-       
+
         Vector2 temp = gameObject.transform.localScale;
         temp.x *= -1;
         gameObject.transform.localScale = temp;
