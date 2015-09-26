@@ -15,6 +15,7 @@ public class beatBouncer : MonoBehaviour
 	//Higher = Faster, Lower = Slower
 	private static float returnSpeedModifier = .5f;
 	public Vector2 startPosition;
+    public GameObject parentalUnit;
 	// Use this for initialization
 	void Start ()
 	{
@@ -36,7 +37,8 @@ public class beatBouncer : MonoBehaviour
 	}
 
 	public void spawned(){
-		startPosition = transform.position;
+		startPosition = parentalUnit.transform.position;
+        transform.position = startPosition;
 		distance = Mathf.Abs(GameManager.gm.centerPos.y - startPosition.y);
 		if (p1)
 		{

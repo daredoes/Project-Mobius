@@ -25,9 +25,6 @@ public class GameManager : MonoBehaviour
 
     //Reference to Button Selection Panel/other UI elements to toggle on and off
     public GameObject ButtonCountSelectPanel;
-    public GameObject OneUI;
-    public GameObject ThreeUI;
-    public GameObject fiveUI;
 
     //How many bars does the player want to use
     public int ButtonCount;
@@ -35,10 +32,6 @@ public class GameManager : MonoBehaviour
     public int barDistance = 10;
 
     public float barAndButtonWidth;
-
-    //Max amount of Buttons and Bars allowed in a scene
-    int maxAmountOfButtons = 10;
-    int maxAmountOfBars = 5;
 
     float startx;
 
@@ -98,7 +91,9 @@ public class GameManager : MonoBehaviour
         {
             GameObject _button = (GameObject)Instantiate(button);
             _button.transform.SetParent(p1.transform, false);
+            _button.GetComponent<button>().Spawned();
         }
+       
 
         //Creating Buttons for PLAYER TWO
         for (int i = 0; i < buttonAmount; i++)

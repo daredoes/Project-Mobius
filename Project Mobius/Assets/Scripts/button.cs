@@ -24,20 +24,18 @@ public class button : MonoBehaviour {
     void Start () {
 		gameObject.GetComponent<Button> ().onClick.AddListener (() => {
 			shootBar();
-		});
-		if(beatBar == null && GameManager.gm != null){
-			getBeatBar();
-		}
-
-	
+		});	
 	}
 
  
 
 
-	void spawned(){
-
-	}
+	public void Spawned(){
+        if (beatBar == null)
+        {
+            getBeatBar();
+        }
+    }
 
 	void shootBar(){
 		beatBar.GetComponent<beatBouncer>().hit();
@@ -45,7 +43,8 @@ public class button : MonoBehaviour {
 	}
 
 	void getBeatBar(){
-		beatBar = (GameObject)Instantiate (beatFab,worldPos,Quaternion.identity);
+		beatBar = (GameObject)Instantiate (beatFab);
+        beatBar.GetComponent<beatBouncer>().parentalUnit = this.gameObject;
 		if (p1) {
 			spawnBar (1);
 		} 
