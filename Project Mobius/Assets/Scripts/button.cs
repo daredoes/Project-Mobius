@@ -69,12 +69,22 @@ public class button : MonoBehaviour {
 		if (Input.GetKeyDown (launch)) {
 			shootBar();
 		}
-        if (Input.GetMouseButtonDown (0))
+        /*if (Input.GetMouseButtonDown (0))
 		{
 			if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition))) {
 				beatBar.SendMessage("hit");
 			}
-		} 
+		} */
+
+        var touchCount = Input.touchCount;
+        for (var i = 0; i < touchCount; i++)
+        {
+            var touch = Input.GetTouch(i);
+            if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
+            {
+                beatBar.SendMessage("hit");
+            }
+        }
         //Debug.Log("SCREENPOS: " + screenPos);
         //Debug.Log("WORLDPOS: " + worldPos);
 

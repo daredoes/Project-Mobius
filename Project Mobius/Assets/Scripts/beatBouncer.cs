@@ -13,7 +13,7 @@ public class beatBouncer : MonoBehaviour
 	bool hollow;
 	private static float speed = .05f;
 	//Higher = Faster, Lower = Slower
-	private static float returnSpeedModifier = .5f;
+	private static float returnSpeedModifier = 1.5f;
 	public Vector2 startPosition;
     public GameObject parentalUnit;
 	// Use this for initialization

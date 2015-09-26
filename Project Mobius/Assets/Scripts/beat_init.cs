@@ -18,7 +18,7 @@ public class beat_init : MonoBehaviour
 	{
 		startPosition = gameObject.transform.position;
 		flip = false;
-		moving = false;
+		moving = true;
 	}
 	
 	// Update is called once per frame
@@ -35,6 +35,7 @@ public class beat_init : MonoBehaviour
 				gameObject.transform.Translate (Vector2.down * step);
 			}
 		}
+        /*
 		if (Input.GetKeyDown (KeyCode.J)) {
 			bounce ();
 		}
@@ -43,7 +44,7 @@ public class beat_init : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.L)) {
 			gameObject.transform.Translate (Vector2.up * step);
-		}
+		} */
 
 	
 	}

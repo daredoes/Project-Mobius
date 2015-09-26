@@ -6,8 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gm = null;
     public GameObject buttonCanvas;
+    //Scenes that Cristian made for placing things around.
 	public GameObject playerOne;
 	public GameObject playerTwo;
+    //Objects Daniel made that hold variable data on each player.
+    public GameObject player1;
+    public GameObject player2;
 
 	public int score;
 	public float seperatorIncrement = 1.0f;
@@ -19,6 +23,9 @@ public class GameManager : MonoBehaviour
 
     //Button Prefab
     public GameObject button;
+
+    //Player Prefab
+    public GameObject player;
 
     //Bar Prefab
 	public GameObject bar;
@@ -88,20 +95,26 @@ public class GameManager : MonoBehaviour
     {
         int count = 0;
         int flip = 1;
+        player1 = (GameObject)Instantiate(player);
+        player2 = (GameObject)Instantiate(player);
 
-        for(int i = 0; i < buttonAmount; i++)
+        player1.GetComponent<player_main>().isPlayer1();
+        player2.GetComponent<player_main>().isPlayer2();
+        for (int i = 0; i < buttonAmount; i++)
         {
             GameObject spawnButton1 = (GameObject)Instantiate(button);
            // spawnButton1.transform.SetParent(buttonCanvas.transform);
             spawnButton1.transform.position = centerP1 + new Vector3(seperatorIncrement * flip * count, 0, 0);
             spawnButton1.GetComponent<button>().Spawned(true);
+            player1.GetComponent<player_main>().addButton(spawnButton1);
 
             GameObject spawnButton2 = (GameObject)Instantiate(button);
             //spawnButton2.transform.SetParent(buttonCanvas.transform);
             spawnButton2.transform.position = centerP2 + new Vector3(seperatorIncrement * flip * count, 0, 0);
             spawnButton2.GetComponent<button>().Spawned(false);
+            player2.GetComponent<player_main>().addButton(spawnButton2);
 
-            if(flip == 1)
+            if (flip == 1)
             {
                 flip = -1;
                 count++;
