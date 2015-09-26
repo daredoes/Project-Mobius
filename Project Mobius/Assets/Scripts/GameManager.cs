@@ -5,17 +5,17 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gm = null;
-
+    public GameObject buttonCanvas;
 	public GameObject playerOne;
 	public GameObject playerTwo;
 
 	public int score;
-	public float seperatorIncrement = .025f;
+	public float seperatorIncrement = 1.0f;
 	//public music audioTtrack;
 	public bool online;
 	public Vector2 centerPos = new Vector2 (0, 0);
-	public Vector2 centerP1 = new Vector2 (0, -1);
-	public Vector2 centerP2 = new Vector2(0, 1);
+	Vector3 centerP1 = new Vector3 (0, -1.8f, 0);
+	Vector3 centerP2 = new Vector3(0, 1.8f, 0);
 
     //Button Prefab
     public GameObject button;
@@ -86,12 +86,40 @@ public class GameManager : MonoBehaviour
 
     public void DrawScene(int buttonAmount, GameObject p1, GameObject p2)
     {
+        int count = 0;
+        int flip = 1;
+
+        for(int i = 0; i < buttonAmount; i++)
+        {
+            GameObject spawnButton1 = (GameObject)Instantiate(button);
+           // spawnButton1.transform.SetParent(buttonCanvas.transform);
+            spawnButton1.transform.position = centerP1 + new Vector3(seperatorIncrement * flip * count, 0, 0);
+            spawnButton1.GetComponent<button>().Spawned(true);
+
+            GameObject spawnButton2 = (GameObject)Instantiate(button);
+            //spawnButton2.transform.SetParent(buttonCanvas.transform);
+            spawnButton2.transform.position = centerP2 + new Vector3(seperatorIncrement * flip * count, 0, 0);
+            spawnButton2.GetComponent<button>().Spawned(false);
+
+            if(flip == 1)
+            {
+                flip = -1;
+                count++;
+            }
+            else
+            {
+                flip = 1;
+            }
+
+
+        }
+        /*
         //Creating Buttons for PLAYER ONE
         for (int i = 0; i < buttonAmount; i++)
         {
             GameObject _button = (GameObject)Instantiate(button);
             _button.transform.SetParent(p1.transform, false);
-            _button.GetComponent<button>().Spawned();
+            _button.GetComponent<button>().Spawned(true);
         }
        
 
@@ -100,6 +128,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject _button = (GameObject)Instantiate(button);
             _button.transform.SetParent(p2.transform, false);
-        }
+            button.GetComponent<button>().Spawned(false);
+        } */
     }
 }

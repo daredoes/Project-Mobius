@@ -37,17 +37,18 @@ public class beatBouncer : MonoBehaviour
 	}
 
 	public void spawned(){
-		startPosition = parentalUnit.transform.position;
-        transform.position = startPosition;
+        if (p1)
+        {
+            flip = 1;
+        }
+        else
+        {
+            flip = -1;
+        }
+        //Debug.Log(parentalUnit.transform.position);
+        startPosition = transform.position;
+        //transform.position = startPosition;
 		distance = Mathf.Abs(GameManager.gm.centerPos.y - startPosition.y);
-		if (p1)
-		{
-			flip = 1;
-		}
-		else
-		{
-			flip = -1;
-		}
 	}
 
 	public bool isAtStart ()
