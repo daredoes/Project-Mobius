@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     //Button Prefab
     public GameObject button;
 
+    //Beat Prefab
+    public GameObject beat;
+
     //Player Prefab
     public GameObject player;
 
@@ -105,6 +108,10 @@ public class GameManager : MonoBehaviour
         player2.GetComponent<player_main>().isPlayer2();
         for (int i = 0; i < buttonAmount; i++)
         {
+            GameObject newBeat = (GameObject)Instantiate(beat);
+            newBeat.transform.position = centerPos + new Vector2(seperatorIncrement * flip * count, 0);
+            newBeat.GetComponent<beat_init>().startGame();
+
             GameObject spawnButton1 = (GameObject)Instantiate(button);
            // spawnButton1.transform.SetParent(buttonCanvas.transform);
             spawnButton1.transform.position = centerP1 + new Vector3(seperatorIncrement * flip * count, 0, 0);

@@ -5,6 +5,7 @@ public class beat_init : MonoBehaviour
 {
 	bool flip;
 	bool moving;
+    bool game_started = false;
 	[Range(0.0f, 5.0f)]
 	public static float
 		travelLength = 1.0f;
@@ -28,28 +29,36 @@ public class beat_init : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-        //Player 1 Side
-        if(transform.position.y > startPosition.y)
+        if (game_started)
         {
-            sideColor = GameManager.gm.GetComponent<GameManager>().player1.gameObject.GetComponent<player_main>().color;
+            //Player 1 Side
+            if (transform.position.y > startPosition.y)
+            {
+                sideColor = GameManager.gm.GetComponent<GameManager>().player1.gameObject.GetComponent<player_main>().color;
 
+            }
+            //Player 2 Side
+            else
+            {
+                sideColor = GameManager.gm.GetComponent<GameManager>().player2.gameObject.GetComponent<player_main>().color;
+            }
+            gameObject.GetComponent<SpriteRenderer>().color = sideColor;
+            if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength)
+            {
+                gameObject.transform.position = startPosition;
+            }
+            if (moving)
+            {
+                if (!flip)
+                {
+                    gameObject.transform.Translate(Vector2.up * step);
+                }
+                else
+                {
+                    gameObject.transform.Translate(Vector2.down * step);
+                }
+            }
         }
-        //Player 2 Side
-        else
-        {
-            sideColor = GameManager.gm.GetComponent<GameManager>().player2.gameObject.GetComponent<player_main>().color;
-        }
-		gameObject.GetComponent<SpriteRenderer> ().color = sideColor;
-		if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength) {
-			gameObject.transform.position = startPosition;
-		}
-		if (moving) {
-			if (!flip) {
-				gameObject.transform.Translate (Vector2.up * step);
-			} else {
-				gameObject.transform.Translate (Vector2.down * step);
-			}
-		}
         /*
 		if (Input.GetKeyDown (KeyCode.J)) {
 			bounce ();
@@ -63,6 +72,10 @@ public class beat_init : MonoBehaviour
 
 	
 	}
+    public void startGame()
+    {
+        game_started = true;
+    }
 
 	public void bounce ()
 	{
