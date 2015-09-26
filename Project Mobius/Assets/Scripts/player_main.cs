@@ -25,13 +25,36 @@ public class player_main : MonoBehaviour
 
     }
 
+    public void spawned()
+    {
+        Vector3 temp;
+        foreach(GameObject butt in buttons)
+        {
+            butt.GetComponent<button>().color = color;
+            butt.GetComponent<button>().claimed();
+
+            if (isPlayerOne)
+            {
+                temp = butt.GetComponent<button>().gameObject.transform.localScale;
+                temp.x *= -1;
+                butt.GetComponent<button>().gameObject.transform.localScale = temp;
+
+                temp = butt.GetComponent<button>().beatBar.GetComponent<beatBouncer>().gameObject.transform.localScale;
+                temp.x *= -1;
+                butt.GetComponent<button>().beatBar.GetComponent<beatBouncer>().gameObject.transform.localScale = temp;
+            }
+        }
+    }
+
     public void isPlayer1()
     {
+        isPlayerOne = true;
         player1Controls();
     }
 
     public void isPlayer2()
     {
+        isPlayerOne = false;
         player2Controls();
     }
 

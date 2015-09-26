@@ -94,6 +94,7 @@ public class beatBouncer : MonoBehaviour
 			}
 			if (!hollow) {
 				other.gameObject.GetComponent<beat_init>().bounce();
+                moving = false;
 			}
 			else{
 				Physics2D.IgnoreCollision(other.transform.GetComponent<Collider2D>(), GetComponent<Collider2D>());

@@ -98,6 +98,9 @@ public class GameManager : MonoBehaviour
         player1 = (GameObject)Instantiate(player);
         player2 = (GameObject)Instantiate(player);
 
+        player1.GetComponent<player_main>().color = Color.green;
+        player2.GetComponent<player_main>().color = Color.magenta;
+
         player1.GetComponent<player_main>().isPlayer1();
         player2.GetComponent<player_main>().isPlayer2();
         for (int i = 0; i < buttonAmount; i++)
@@ -126,6 +129,8 @@ public class GameManager : MonoBehaviour
 
 
         }
+        player1.GetComponent<player_main>().spawned();
+        player2.GetComponent<player_main>().spawned();
         /*
         //Creating Buttons for PLAYER ONE
         for (int i = 0; i < buttonAmount; i++)

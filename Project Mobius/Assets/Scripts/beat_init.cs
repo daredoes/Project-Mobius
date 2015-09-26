@@ -17,6 +17,10 @@ public class beat_init : MonoBehaviour
 	void Start ()
 	{
 		startPosition = gameObject.transform.position;
+       
+        Vector2 temp = gameObject.transform.localScale;
+        temp.x *= -1;
+        gameObject.transform.localScale = temp;
 		flip = false;
 		moving = true;
 	}
@@ -24,6 +28,17 @@ public class beat_init : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+        //Player 1 Side
+        if(transform.position.y > startPosition.y)
+        {
+            sideColor = GameManager.gm.GetComponent<GameManager>().player1.gameObject.GetComponent<player_main>().color;
+
+        }
+        //Player 2 Side
+        else
+        {
+            sideColor = GameManager.gm.GetComponent<GameManager>().player2.gameObject.GetComponent<player_main>().color;
+        }
 		gameObject.GetComponent<SpriteRenderer> ().color = sideColor;
 		if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength) {
 			gameObject.transform.position = startPosition;
@@ -54,6 +69,7 @@ public class beat_init : MonoBehaviour
 		flip = !flip;
 		Vector3 temp = gameObject.transform.localScale;
 		temp.y *= -1;
+        temp.x *= -1;
 		gameObject.transform.localScale = temp;
 	}
 

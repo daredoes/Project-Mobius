@@ -11,6 +11,7 @@ public class button : MonoBehaviour {
     public Camera mainCamera;
     Vector3 screenPos;
     Vector3 worldPos;
+    public Color color;
 
     void Awake()
     {
@@ -27,8 +28,11 @@ public class button : MonoBehaviour {
 		});	
 	}
 
- 
-
+    public void claimed()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = color;
+        beatBar.GetComponent<SpriteRenderer>().color = color;
+    }
 
 	public void Spawned(bool p1Set){
         p1 = p1Set;
