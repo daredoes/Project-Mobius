@@ -9,10 +9,15 @@ public class button : MonoBehaviour {
 	public GameObject beatFab;
 	public static float barDist = 0.5f;
     public Camera mainCamera;
+    Vector3 screenPos;
+    Vector3 worldPos;
 
     void Awake()
     {
         mainCamera = Camera.main;
+        screenPos = gameObject.transform.position;
+
+        worldPos = mainCamera.ScreenToWorldPoint(screenPos);
     }
 
     // Use this for initialization
@@ -27,6 +32,8 @@ public class button : MonoBehaviour {
 	
 	}
 
+ 
+
 
 	void spawned(){
 
@@ -38,7 +45,7 @@ public class button : MonoBehaviour {
 	}
 
 	void getBeatBar(){
-		beatBar = (GameObject)Instantiate (beatFab);
+		beatBar = (GameObject)Instantiate (beatFab,worldPos,Quaternion.identity);
 		if (p1) {
 			spawnBar (1);
 		} 
@@ -49,7 +56,7 @@ public class button : MonoBehaviour {
 	}
 
 	void spawnBar(int aboveBelow){
-		beatBar.transform.position = new Vector3 (mainCamera.ScreenToWorldPoint(this.transform.) transform.position.x, transform.position.y + (barDist * aboveBelow), transform.position.z);
+        //beatBar.transform.position;
 		beatBar.GetComponent<beatBouncer>().p1 = p1;
 		//beatBar.GetComponent<beatBouncer>().launch = launch;
 		beatBar.GetComponent<beatBouncer>().spawned();
@@ -60,14 +67,8 @@ public class button : MonoBehaviour {
 		if (Input.GetKeyDown (launch)) {
 			shootBar();
 		}
-		/*if (Input.GetMouseButtonDown (0))
-		{
+        Debug.Log("SCREENPOS: " + screenPos);
+        Debug.Log("WORLDPOS: " + worldPos);
 
-			if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition))) {
-				beatBar.SendMessage("hit");
-			}
-
-		} */
-	
-	}
+    }
 }
