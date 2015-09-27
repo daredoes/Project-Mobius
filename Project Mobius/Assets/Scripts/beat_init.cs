@@ -10,6 +10,7 @@ public class beat_init : MonoBehaviour
 	public static float
 		travelLength = 1.0f;
 	Vector2 startPosition;
+    Quaternion currentRotation;
 	public Color sideColor;
 	[Range(0.0f, .2f)]
 	public float
@@ -17,8 +18,10 @@ public class beat_init : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+        gameObject.tag = "Beat";
 		startPosition = gameObject.transform.position;
-
+        currentRotation = gameObject.transform.rotation;
+        currentRotation.z = 0;
         Vector2 temp = gameObject.transform.localScale;
         temp.x *= -1;
         gameObject.transform.localScale = temp;
@@ -29,6 +32,7 @@ public class beat_init : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+        gameObject.transform.rotation = currentRotation;
         if (game_started)
         {
             //Player 1 Side
@@ -88,9 +92,7 @@ public class beat_init : MonoBehaviour
 
 	void OnCollisionEnter2D (Collision2D other)
 	{
-		if (other.gameObject.tag == ("Floor")) {
-		}
-
+	
 	}
 }
 	

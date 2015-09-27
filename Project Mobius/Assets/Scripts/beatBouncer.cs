@@ -19,6 +19,7 @@ public class beatBouncer : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+        gameObject.tag = "Floor";
 		moving = false;
 		hollow = true;
         if (p1)
