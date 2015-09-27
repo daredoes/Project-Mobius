@@ -18,6 +18,7 @@ public class button : MonoBehaviour {
     {
         mainCamera = Camera.main;
         DisplayText = GetComponent<Text>();
+        DisplayText.GetComponent<Renderer>().sortingLayerID = transform.GetComponent<Renderer>().sortingLayerID;
         screenPos = gameObject.transform.position;
 
         worldPos = mainCamera.ScreenToWorldPoint(screenPos);
