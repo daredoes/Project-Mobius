@@ -12,10 +12,12 @@ public class button : MonoBehaviour {
     Vector3 screenPos;
     Vector3 worldPos;
     public Color color;
+    public Text DisplayText;
 
     void Awake()
     {
         mainCamera = Camera.main;
+        DisplayText = GetComponent<Text>();
         screenPos = gameObject.transform.position;
 
         worldPos = mainCamera.ScreenToWorldPoint(screenPos);
@@ -34,12 +36,23 @@ public class button : MonoBehaviour {
         beatBar.GetComponent<SpriteRenderer>().color = color;
     }
 
+    public void setText()
+    {
+        DisplayText.text = launch.ToString();
+    }
+
 	public void Spawned(bool p1Set){
         p1 = p1Set;
         if (beatBar == null)
         {
             getBeatBar();
         }
+        /*
+        * HEY CRISTIAN I NEED YOU TO MAKE THE TEXT APPEAR ABOVE THE BUTTON SPRITES!
+        * I MADE IT SET TO THE SPECIAL KEY IT GETS TO SERVE ITS FUNCTIONS
+        * I DONT KNOW UNITY UI. I STAY HERE. CODE IS SAFE. @_%
+        */
+        
     }
 
 	void shootBar(){

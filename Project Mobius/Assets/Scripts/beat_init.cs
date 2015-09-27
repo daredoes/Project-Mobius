@@ -49,6 +49,16 @@ public class beat_init : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().color = sideColor;
             if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength)
             {
+                // Player Two
+                if(gameObject.transform.position.y < startPosition.y - travelLength)
+                {
+                    GameManager.gm.GetComponent<GameManager>().player2.GetComponent<player_main>().score += 1;
+                }
+                //Player One
+                else if(gameObject.transform.position.y > startPosition.y + travelLength)
+                {
+                    GameManager.gm.GetComponent<GameManager>().player1.GetComponent<player_main>().score += 1;
+                }
                 gameObject.transform.position = startPosition;
             }
             if (moving)

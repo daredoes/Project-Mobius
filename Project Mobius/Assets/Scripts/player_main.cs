@@ -79,6 +79,7 @@ public class player_main : MonoBehaviour
     public void addButton(GameObject butt)
     {
         butt.GetComponent<button>().launch = keys[buttonCount];
+        butt.GetComponent<button>().setText();
         buttonCount++;
         buttons.Add(butt);
     }
