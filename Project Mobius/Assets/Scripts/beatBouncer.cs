@@ -6,7 +6,9 @@ public class beatBouncer : MonoBehaviour
 	//flip = -1 (Moves down) flip = 1 (Moves up)
 	[Range(-1, 1)]
 	public int flip;
+    private float fadeSpeed = 0.075f;
 	private float distance = 1.0f;
+    private bool fadeInColor = false;
 	public bool p1;
 	public bool moving;
 	private Collider2D matchedBeat = null;
@@ -14,12 +16,16 @@ public class beatBouncer : MonoBehaviour
 	private static float speed = .05f;
 	//Higher = Faster, Lower = Slower
 	private static float returnSpeedModifier = 1.5f;
+    Color c;
+    SpriteRenderer sprender;
 	public Vector2 startPosition;
     public GameObject parentalUnit;
 	// Use this for initialization
 	void Start ()
 	{
         gameObject.tag = "Floor";
+        sprender = GetComponent<SpriteRenderer>();
+        c = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.0f);
 		moving = false;
 		hollow = true;
         if (p1)
@@ -60,7 +66,14 @@ public class beatBouncer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-
+        if (fadeInColor)
+        {
+            fadeIn();
+        }
+        if(sprender.color.a >= 255.0f)
+        {
+            fadeInColor = false;
+        }
 		if (moving) {
 			if (flip == 1) {
 				if (gameObject.transform.position.y < startPosition.y + (distance)) {
@@ -81,10 +94,41 @@ public class beatBouncer : MonoBehaviour
 			if ((Vector2)gameObject.transform.position != (Vector2)startPosition) {
 				gameObject.transform.position = Vector2.MoveTowards (gameObject.transform.position, startPosition, speed * returnSpeedModifier);
 			}
+            else
+            {
+                if(sprender.color.a != 0.0f)
+                {
+                    sprender.color = c;
+                }
+                else
+                {
+                    fadeOut();
+                }
+                /*
+                if(sprender.enabled != false)
+                {
+                    sprender.enabled = false;
+                } */
+            }
 		}
 	
 	}
 
+    void fadeIn()
+    {
+        if(sprender.color.a < 255.0f)
+        {
+            sprender.color = new Color(c.r, c.g, c.b, sprender.color.a + fadeSpeed);
+        }
+    }
+    
+    void fadeOut()
+    {
+        if(sprender.color.a > 0.0f)
+        {
+            sprender.color = new Color(c.r, c.g, c.b, sprender.color.a - fadeSpeed);
+        }
+    }
 	void OnCollisionEnter2D (Collision2D other)
 	{
 
@@ -109,6 +153,7 @@ public class beatBouncer : MonoBehaviour
         { 
                 if (isAtStart())
                 {
+                    fadeInColor = true;
                     moving = true;
                     hollow = false;
                     Physics2D.IgnoreCollision(matchedBeat, GetComponent<Collider2D>(), false);
