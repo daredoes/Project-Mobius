@@ -6,9 +6,8 @@ public class beat_init : MonoBehaviour
 	bool flip;
 	bool moving;
     bool game_started = false;
-	[Range(0.0f, 5.0f)]
-	public static float
-		travelLength = 1.0f;
+	public float
+		travelLength;
 	Vector2 startPosition;
     Quaternion currentRotation;
 	public Color sideColor;
@@ -47,11 +46,17 @@ public class beat_init : MonoBehaviour
                 sideColor = GameManager.gm.GetComponent<GameManager>().player2.gameObject.GetComponent<player_main>().color;
             }
             gameObject.GetComponent<SpriteRenderer>().color = sideColor;
+            Debug.Log("Y: " + gameObject.transform.position.y);
+            Debug.Log("YStart: " + startPosition.y);
+            Debug.Log("YEnd+: " + (startPosition.y + travelLength));
+            Debug.Log("YEnd-: " + (startPosition.y - travelLength));
             if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength)
             {
+                Debug.Log("Should be returning");
                 // Player Two
                 if(gameObject.transform.position.y < startPosition.y - travelLength)
                 {
+                    Debug.Log("Should be scoring");
                     GameManager.gm.GetComponent<GameManager>().player2.GetComponent<player_main>().score += 1;
                 }
                 //Player One

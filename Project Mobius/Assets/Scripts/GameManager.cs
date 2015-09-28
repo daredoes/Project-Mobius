@@ -13,13 +13,15 @@ public class GameManager : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
 
-	public int score;
+    float travelLength = 2.5f;
+
+    public int score;
 	public float seperatorIncrement = 1.0f;
 	//public music audioTtrack;
 	public bool online;
 	public Vector2 centerPos = new Vector2 (0, 0);
-	Vector3 centerP1 = new Vector3 (0, -1.8f, 0);
-	Vector3 centerP2 = new Vector3(0, 1.8f, 0);
+    Vector3 centerP1 = new Vector3(0, -2.5f, 0);
+	Vector3 centerP2 = new Vector3(0, 2.5f, 0);
 
     //Button Prefab
     public GameObject button;
@@ -49,6 +51,8 @@ public class GameManager : MonoBehaviour
     {
 		gm = this;
         ButtonCountSelectPanel.SetActive(true);
+        centerP1 = new Vector3(0, travelLength *-1, 0);
+        centerP2 = new Vector3(0, travelLength, 0);
     }
 
 	void Start ()
@@ -110,6 +114,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject newBeat = (GameObject)Instantiate(beat);
             newBeat.transform.position = centerPos + new Vector2(seperatorIncrement * flip * count, 0);
+            newBeat.GetComponent<beat_init>().travelLength = travelLength - 0.5f ;
             newBeat.GetComponent<beat_init>().startGame();
 
             GameObject spawnButton1 = (GameObject)Instantiate(button);
