@@ -11,6 +11,7 @@ public class beatBouncer : MonoBehaviour
     private bool fadeInColor = false;
 	public bool p1;
 	public bool moving;
+	public float scaler = 1.0f;
 	private Collider2D matchedBeat = null;
 	bool hollow;
 	private static float speed = .05f;

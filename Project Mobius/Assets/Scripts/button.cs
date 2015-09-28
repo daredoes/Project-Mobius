@@ -8,6 +8,8 @@ public class button : MonoBehaviour {
 	public GameObject beatBar = null;
 	public GameObject beatFab;
 	public float barDist = 0.5f;
+	private float scaler = 0.5f;
+	private SpriteRenderer sprender;
     public Camera mainCamera;
     Vector3 screenPos;
     Vector3 worldPos;
@@ -17,6 +19,8 @@ public class button : MonoBehaviour {
     void Awake()
     {
         mainCamera = Camera.main;
+		sprender = GetComponent<SpriteRenderer> ();
+		sprender.transform.localScale = sprender.transform.localScale += new Vector3 (scaler, scaler, scaler);
         DisplayText = GetComponent<Text>();
         DisplayText.GetComponent<Renderer>().sortingLayerID = transform.GetComponent<Renderer>().sortingLayerID;
         screenPos = gameObject.transform.position;
@@ -65,11 +69,11 @@ public class button : MonoBehaviour {
         beatBar.GetComponent<beatBouncer>().parentalUnit = this.gameObject;
         //Debug.Log("P1: " + p1);
 		if (p1 == true) {
-            beatBar.transform.position = transform.position + new Vector3(0, barDist * 1, 0);
+            beatBar.transform.position = transform.position + new Vector3(0, barDist * 1 * transform.localScale.y, 0);
             spawnBar (1);
 		} 
 		else {
-            beatBar.transform.position = transform.position + new Vector3(0, barDist * -1, 0);
+			beatBar.transform.position = transform.position + new Vector3(0, barDist * -1 * transform.localScale.y, 0);
             spawnBar(-1);
 
 		}
@@ -98,10 +102,12 @@ public class button : MonoBehaviour {
         for (var i = 0; i < touchCount; i++)
         {
             var touch = Input.GetTouch(i);
-            if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
-            {
-                beatBar.SendMessage("hit");
-            }
+			if(touch.phase == TouchPhase.Began){
+		        if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
+		        {
+		            beatBar.GetComponent<beatBouncer>().hit ();
+		        }
+			}
         }
         //Debug.Log("SCREENPOS: " + screenPos);
         //Debug.Log("WORLDPOS: " + worldPos);

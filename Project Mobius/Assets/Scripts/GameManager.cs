@@ -129,6 +129,9 @@ public class GameManager : MonoBehaviour
             spawnButton2.GetComponent<button>().Spawned(false);
             player2.GetComponent<player_main>().addButton(spawnButton2);
 
+			Physics2D.IgnoreCollision(newBeat.GetComponent<Collider2D>(), spawnButton1.GetComponent<Collider2D>(), true);
+			Physics2D.IgnoreCollision(newBeat.GetComponent<Collider2D>(), spawnButton2.GetComponent<Collider2D>(), true);
+
             if (flip == 1)
             {
                 flip = -1;

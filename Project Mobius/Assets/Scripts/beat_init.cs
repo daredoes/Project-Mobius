@@ -35,7 +35,7 @@ public class beat_init : MonoBehaviour
         if (game_started)
         {
             //Player 1 Side
-            if (transform.position.y > startPosition.y)
+            if (flip)
             {
                 sideColor = GameManager.gm.GetComponent<GameManager>().player1.gameObject.GetComponent<player_main>().color;
 
@@ -64,7 +64,9 @@ public class beat_init : MonoBehaviour
                 {
                     GameManager.gm.GetComponent<GameManager>().player1.GetComponent<player_main>().score += 1;
                 }
+				bounce();
                 gameObject.transform.position = startPosition;
+
             }
             if (moving)
             {
