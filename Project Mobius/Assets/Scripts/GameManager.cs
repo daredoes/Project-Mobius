@@ -51,10 +51,12 @@ public class GameManager : MonoBehaviour
 
     float startx;
 
+    /*Beginning timer variables*/
     bool startWait = false;
     public float startWaitSec = 3f;
     public bool hasDrawnScene = false;
     public Text timer;
+
 
     void Awake()
     {

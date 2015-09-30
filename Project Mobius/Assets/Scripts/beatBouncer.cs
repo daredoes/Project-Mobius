@@ -21,6 +21,8 @@ public class beatBouncer : MonoBehaviour
     SpriteRenderer sprender;
 	public Vector2 startPosition;
     public GameObject parentalUnit;
+
+   
 	// Use this for initialization
 	void Start ()
 	{
@@ -29,6 +31,8 @@ public class beatBouncer : MonoBehaviour
         c = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.0f);
 		moving = false;
 		hollow = true;
+
+
         if (p1)
         {
             flip = 1;
@@ -152,15 +156,13 @@ public class beatBouncer : MonoBehaviour
     {
         if(!moving)
         { 
-                if (isAtStart())
-                {
-                    fadeInColor = true;
-                    moving = true;
-                    hollow = false;
-                    Physics2D.IgnoreCollision(matchedBeat, GetComponent<Collider2D>(), false);
-                }
-            
-
+            if (isAtStart())
+            {
+                fadeInColor = true;
+                moving = true;
+                hollow = false;
+                Physics2D.IgnoreCollision(matchedBeat, GetComponent<Collider2D>(), false);
+            }
         }
         
     }

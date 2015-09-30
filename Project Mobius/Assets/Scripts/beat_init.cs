@@ -12,11 +12,20 @@ public class beat_init : MonoBehaviour
     Quaternion currentRotation;
 	public Color sideColor;
 	[Range(0.0f, .2f)]
-	public float
-		step = .05f;
-	// Use this for initialization
-	void Start ()
+	public float step = .05f;
+
+    /*camerShake Variables*/
+    private float camShakeAmount = 0.02f;
+    CameraShake camShake;
+
+
+    // Use this for initialization
+    void Start ()
 	{
+
+        //Camera shake stuff
+        camShake = GameManager.gm.GetComponent<CameraShake>();
+
         gameObject.tag = "Beat";
 		startPosition = gameObject.transform.position;
         currentRotation = gameObject.transform.rotation;
@@ -53,8 +62,10 @@ public class beat_init : MonoBehaviour
             if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength)
             {
                 Debug.Log("Should be returning");
+
+                camShake.Shake(camShakeAmount, 0.02f);
                 // Player Two
-                if(gameObject.transform.position.y < startPosition.y - travelLength)
+                if (gameObject.transform.position.y < startPosition.y - travelLength)
                 {
                     Debug.Log("Should be scoring");
                     GameManager.gm.GetComponent<GameManager>().player2.GetComponent<player_main>().score += 1;
