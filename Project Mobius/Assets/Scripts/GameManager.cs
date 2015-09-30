@@ -63,6 +63,14 @@ public class GameManager : MonoBehaviour
     float seconds = 0;
     float miliseconds = 0;
 
+
+
+    //Player One Text Score
+    public Text playerOneScore;
+
+    //Player Two Text Score
+    public Text playerTwoScore;
+
     void Awake()
     {
 		gm = this;
@@ -118,6 +126,13 @@ public class GameManager : MonoBehaviour
             */
             DrawScene(ButtonCount, playerOne, playerTwo);
             CountDownPanel.SetActive(false);
+        }
+
+        if(hasDrawnScene)
+        {
+            playerOneScore.text = player1.GetComponent<player_main>().score.ToString();
+
+            playerTwoScore.text = player2.GetComponent<player_main>().score.ToString();
         }
 
         if(startWaitSec == 0 && hasDrawnScene)
@@ -181,7 +196,6 @@ public class GameManager : MonoBehaviour
 
     public void DrawScene(int buttonAmount, GameObject p1, GameObject p2)
     {
-        hasDrawnScene = true;
 
 
         int count = 0;
@@ -226,10 +240,12 @@ public class GameManager : MonoBehaviour
                 flip = 1;
             }
 
-
         }
         player1.GetComponent<player_main>().spawned();
         player2.GetComponent<player_main>().spawned();
+
+        hasDrawnScene = true;
+
         /*
         //Creating Buttons for PLAYER ONE
         for (int i = 0; i < buttonAmount; i++)

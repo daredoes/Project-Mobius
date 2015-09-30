@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-
 public class player_main : MonoBehaviour
 {
 	public bool isPlayerOne;
@@ -20,9 +19,13 @@ public class player_main : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         
+    }
 
+    void Update()
+    {
     }
 
     public void spawned()
@@ -83,9 +86,4 @@ public class player_main : MonoBehaviour
         buttonCount++;
         buttons.Add(butt);
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
