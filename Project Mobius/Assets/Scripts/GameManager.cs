@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +36,9 @@ public class GameManager : MonoBehaviour
     //Bar Prefab
 	public GameObject bar;
 
+    //countDown Prfab
+    public GameObject CountDownPanel;
+
     //Reference to Button Selection Panel/other UI elements to toggle on and off
     public GameObject ButtonCountSelectPanel;
 
@@ -47,6 +51,11 @@ public class GameManager : MonoBehaviour
 
     float startx;
 
+    bool startWait = false;
+    public float startWaitSec = 3f;
+    public bool hasDrawnScene = false;
+    public Text timer;
+
     void Awake()
     {
 		gm = this;
@@ -57,13 +66,51 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
     {
-	
-	}
-	
-	void Update ()
+        /*MAKING A WAITING FUNCTION TO START SO THE PLAYERS HAVE A VISUAL QUEUE*/
+        timer = GameObject.FindGameObjectWithTag("timer").GetComponent<Text>();
+    }
+
+    void Update ()
     {
-	
-	}
+        timer.text = Mathf.CeilToInt(startWaitSec).ToString();
+
+	    if (startWait)
+        {
+            if (startWaitSec > 0)
+            {
+                startWaitSec -= Time.deltaTime;
+            }
+            else
+            {
+                startWaitSec = 0;
+            }
+        }
+
+        if (startWaitSec == 0 && !hasDrawnScene)
+        {
+            /*  
+                I KNOW I COULD PUT THIS IN THE ELSE STATEMENT ABOVE BUT I JUST WANTED IT
+                SEPERATED.
+
+                YOU CAN DRAW SCENE WHEN BUTTON IS CLICKED, WHERE I COMMENTED IT OUT
+                BUT HERE IS WHERE YOU CAN MAKE THE BEAT ACTUALLY BEGIN MOVING
+
+                FOR NOW IM JUST MAKING IT DRAW THE SCENE AND START AFTER THE COUNTER
+                HAS COMPLETELY GONE TO 0.
+
+                OR WE CAN MAKE ONE MORE UI PANEL THAT BASICALLY DISPLAYS THE COUNTER LIKE
+                        -READY
+                        -3
+                        -2                      //I THINK THIS IS WHAT I WILL DO FOR NOW.
+                        -1
+                        -GO!
+                AND THEN BEGIN THE GAME
+            */
+            DrawScene(ButtonCount, playerOne, playerTwo);
+            CountDownPanel.SetActive(false);
+            
+        }
+    }
 
 
     /// <summary>
@@ -72,8 +119,10 @@ public class GameManager : MonoBehaviour
     public void One()
     {
         ButtonCount = 1;
-        DrawScene(ButtonCount, playerOne, playerTwo);
+        //DrawScene(ButtonCount, playerOne, playerTwo);
+        startWait = true;
         ButtonCountSelectPanel.SetActive(false);
+        CountDownPanel.SetActive(true);
     }
 
 
@@ -83,8 +132,10 @@ public class GameManager : MonoBehaviour
     public void Two()
     {
         ButtonCount = 3;
-        DrawScene(ButtonCount, playerOne, playerTwo);
+        //DrawScene(ButtonCount, playerOne, playerTwo);
+        startWait = true;
         ButtonCountSelectPanel.SetActive(false);
+        CountDownPanel.SetActive(true);
     }
 
 
@@ -94,12 +145,15 @@ public class GameManager : MonoBehaviour
     public void Three()
     {
         ButtonCount = 5;
-        DrawScene(ButtonCount, playerOne, playerTwo);
+        //DrawScene(ButtonCount, playerOne, playerTwo);
+        startWait = true;
         ButtonCountSelectPanel.SetActive(false);
+        CountDownPanel.SetActive(true);
     }
 
     public void DrawScene(int buttonAmount, GameObject p1, GameObject p2)
     {
+        hasDrawnScene = true;
         int count = 0;
         int flip = 1;
         player1 = (GameObject)Instantiate(player);
