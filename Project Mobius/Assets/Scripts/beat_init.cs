@@ -55,15 +55,15 @@ public class beat_init : MonoBehaviour
                 sideColor = GameManager.gm.GetComponent<GameManager>().player2.gameObject.GetComponent<player_main>().color;
             }
             gameObject.GetComponent<SpriteRenderer>().color = sideColor;
-            Debug.Log("Y: " + gameObject.transform.position.y);
-            Debug.Log("YStart: " + startPosition.y);
-            Debug.Log("YEnd+: " + (startPosition.y + travelLength));
-            Debug.Log("YEnd-: " + (startPosition.y - travelLength));
+           // Debug.Log("Y: " + gameObject.transform.position.y);
+           // Debug.Log("YStart: " + startPosition.y);
+           // Debug.Log("YEnd+: " + (startPosition.y + travelLength));
+           // Debug.Log("YEnd-: " + (startPosition.y - travelLength));
             if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength)
             {
                 Debug.Log("Should be returning");
 
-                camShake.Shake(camShakeAmount, 0.02f);
+                camShake.Shake(camShakeAmount, 0.03f);
                 // Player Two
                 if (gameObject.transform.position.y < startPosition.y - travelLength)
                 {

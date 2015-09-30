@@ -55,8 +55,13 @@ public class GameManager : MonoBehaviour
     bool startWait = false;
     public float startWaitSec = 3f;
     public bool hasDrawnScene = false;
-    public Text timer;
-
+    //Start Screen Timer
+    public Text startTimer;
+    //In Game Timer
+    public Text gameTimer;
+    float minutes = 1f;
+    float seconds = 0;
+    float miliseconds = 0;
 
     void Awake()
     {
@@ -69,14 +74,17 @@ public class GameManager : MonoBehaviour
 	void Start ()
     {
         /*MAKING A WAITING FUNCTION TO START SO THE PLAYERS HAVE A VISUAL QUEUE*/
-        timer = GameObject.FindGameObjectWithTag("timer").GetComponent<Text>();
+        startTimer = GameObject.FindGameObjectWithTag("timer").GetComponent<Text>();
+        gameTimer = GameObject.FindGameObjectWithTag("inGameTimer").GetComponent<Text>();
     }
 
     void Update ()
     {
-        timer.text = Mathf.CeilToInt(startWaitSec).ToString();
+        startTimer.text = Mathf.CeilToInt(startWaitSec).ToString();
+       
+        gameTimer.text = string.Format("Timer: {0}:{1}:{2}", minutes, seconds, (int)miliseconds);
 
-	    if (startWait)
+        if (startWait)
         {
             if (startWaitSec > 0)
             {
@@ -110,7 +118,25 @@ public class GameManager : MonoBehaviour
             */
             DrawScene(ButtonCount, playerOne, playerTwo);
             CountDownPanel.SetActive(false);
-            
+        }
+
+        if(startWaitSec == 0 && hasDrawnScene)
+        {
+            if (miliseconds <= 0)
+            {
+                if (seconds <= 0)
+                {
+                    minutes--;
+                    seconds = 59;
+                }
+                else if (seconds >= 0)
+                {
+                    seconds--;
+                }
+
+                miliseconds = 100;
+            }
+            miliseconds -= Time.deltaTime * 100;
         }
     }
 
@@ -156,6 +182,8 @@ public class GameManager : MonoBehaviour
     public void DrawScene(int buttonAmount, GameObject p1, GameObject p2)
     {
         hasDrawnScene = true;
+
+
         int count = 0;
         int flip = 1;
         player1 = (GameObject)Instantiate(player);
