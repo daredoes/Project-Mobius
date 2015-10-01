@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class BeatButtonAI : MonoBehaviour {
-
+public class BeatButtonAI : MonoBehaviour
+{
+    
 	// Use this for initialization
 	void Start () {
 	

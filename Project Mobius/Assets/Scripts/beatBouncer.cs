@@ -20,12 +20,28 @@ public class beatBouncer : MonoBehaviour
     Color c;
     SpriteRenderer sprender;
 	public Vector2 startPosition;
-    public GameObject parentalUnit;
+   // public GameObject parentalUnit;
+    public bool isai;
+    public GameObject myBarBeat;
 
-   
-	// Use this for initialization
-	void Start ()
+    public float distanceFromBeat;
+    public float hitDistance = 1f;
+    public bool AIhit;
+    public float missProb;
+
+    void Awake()
+    {
+        startPosition = transform.position;
+        
+    }
+
+    // Use this for initialization
+    void Start ()
 	{
+        isai = GetComponentInParent<button>().isAI;
+        myBarBeat = GetComponentInParent<button>().matchedBeat;
+        Debug.Log(myBarBeat);
+
         gameObject.tag = "Floor";
         sprender = GetComponent<SpriteRenderer>();
         c = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.0f);
@@ -44,9 +60,6 @@ public class beatBouncer : MonoBehaviour
 
 	}
 
-	void Awake(){
-		startPosition = transform.position;
-	}
 
 	public void spawned(){
         if (p1)
@@ -71,6 +84,29 @@ public class beatBouncer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+        
+        if (isai)
+        {
+            distanceFromBeat = Mathf.Abs(transform.position.y - myBarBeat.transform.position.y);
+
+            missProb = Random.Range(0f, 1f);
+            Debug.Log(AIhit);
+
+            if(missProb*100 % 10 != 0)
+            {
+                AIhit = true;
+            }
+            else
+            {
+                AIhit = false;
+            }
+
+            if (distanceFromBeat < hitDistance && AIhit)
+            {
+                hit();
+            }
+        }
+
         if (fadeInColor)
         {
             fadeIn();
@@ -116,6 +152,8 @@ public class beatBouncer : MonoBehaviour
                 } */
             }
 		}
+
+        
 	
 	}
 

@@ -4,6 +4,7 @@ using System.Collections;
 public class player_main : MonoBehaviour
 {
 	public bool isPlayerOne;
+    public bool isai;
 	[Range(0, 11)]
 	public int score = 0;
 	public Color color;
@@ -26,6 +27,7 @@ public class player_main : MonoBehaviour
 
     void Update()
     {
+        
     }
 
     public void spawned()
@@ -47,6 +49,13 @@ public class player_main : MonoBehaviour
                 butt.GetComponent<button>().beatBar.GetComponent<beatBouncer>().gameObject.transform.localScale = temp;
             }
         }
+    }
+
+    public void isAI()
+    {
+        isai = true;
+
+        player2Controls();
     }
 
     public void isPlayer1()

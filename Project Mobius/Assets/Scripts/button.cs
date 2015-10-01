@@ -4,6 +4,7 @@ using System.Collections;
 
 public class button : MonoBehaviour {
 	public bool p1;
+    public bool isAI;
 	public KeyCode launch = KeyCode.H;
 	public GameObject beatBar = null;
 	public GameObject beatFab;
@@ -15,6 +16,7 @@ public class button : MonoBehaviour {
     Vector3 worldPos;
     public Color color;
     public Text DisplayText;
+    public GameObject matchedBeat;
 
     void Awake()
     {
@@ -30,6 +32,7 @@ public class button : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        isAI = GetComponentInParent<player_main>().isai;
 		gameObject.GetComponent<Button> ().onClick.AddListener (() => {
 			shootBar();
 		});	
@@ -66,17 +69,19 @@ public class button : MonoBehaviour {
 
 	void getBeatBar(){
 		beatBar = (GameObject)Instantiate (beatFab);
-        beatBar.GetComponent<beatBouncer>().parentalUnit = this.gameObject;
+        //beatBar.GetComponent<beatBouncer>().parentalUnit = this.gameObject;
         //Debug.Log("P1: " + p1);
-		if (p1 == true) {
+
+		if (p1) {
             beatBar.transform.position = transform.position + new Vector3(0, barDist * 1 * transform.localScale.y, 0);
             spawnBar (1);
 		} 
 		else {
 			beatBar.transform.position = transform.position + new Vector3(0, barDist * -1 * transform.localScale.y, 0);
             spawnBar(-1);
-
 		}
+
+        beatBar.transform.SetParent(this.transform, true);
 	}
 
 	void spawnBar(int aboveBelow){
