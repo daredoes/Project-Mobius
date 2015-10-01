@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     float travelLength = 2.5f;
 
     public int score;
-	public float seperatorIncrement = 1.0f;
+	public float seperatorIncrement = 2.0f;
+	private float sepHeight = 0.25f;
 	//public music audioTtrack;
 	public bool online;
 	public Vector2 centerPos = new Vector2 (0, 0);
@@ -211,19 +212,38 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < buttonAmount; i++)
         {
             GameObject newBeat = (GameObject)Instantiate(beat);
+			if(i<3){
             newBeat.transform.position = centerPos + new Vector2(seperatorIncrement * flip * count, 0);
             newBeat.GetComponent<beat_init>().travelLength = travelLength - 0.5f ;
+			}
+			else{
+				newBeat.transform.position = centerPos + new Vector2(seperatorIncrement/2 * flip, 0);
+				newBeat.GetComponent<beat_init>().travelLength = travelLength - 0.5f - sepHeight ;
+			}
+
+
             newBeat.GetComponent<beat_init>().startGame();
 
             GameObject spawnButton1 = (GameObject)Instantiate(button);
            // spawnButton1.transform.SetParent(buttonCanvas.transform);
+			if(i < 3){
             spawnButton1.transform.position = centerP1 + new Vector3(seperatorIncrement * flip * count, 0, 0);
+			}
+			else{
+				spawnButton1.transform.position = centerP1 + new Vector3(seperatorIncrement/2 * flip, sepHeight, 0);
+			}
             spawnButton1.GetComponent<button>().Spawned(true);
             player1.GetComponent<player_main>().addButton(spawnButton1);
 
             GameObject spawnButton2 = (GameObject)Instantiate(button);
             //spawnButton2.transform.SetParent(buttonCanvas.transform);
-            spawnButton2.transform.position = centerP2 + new Vector3(seperatorIncrement * flip * count, 0, 0);
+			if(i < 3){
+				spawnButton2.transform.position = centerP2 + new Vector3(seperatorIncrement * flip * count, 0, 0);
+			}
+			else{
+				spawnButton2.transform.position = centerP2 + new Vector3(seperatorIncrement/2 * flip, sepHeight * -1.0f, 0);
+			}
+            
             spawnButton2.GetComponent<button>().Spawned(false);
             player2.GetComponent<player_main>().addButton(spawnButton2);
 
