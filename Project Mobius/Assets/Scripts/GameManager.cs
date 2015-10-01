@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
 
-    float travelLength = 2.5f;
+	float travelLength = 2.5f;
 
     public int score;
 	public float seperatorIncrement = 2.0f;
