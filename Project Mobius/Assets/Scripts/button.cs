@@ -9,7 +9,7 @@ public class button : MonoBehaviour {
 	public GameObject beatBar = null;
 	public GameObject beatFab;
 	public float barDist = 0.5f;
-	private float scaler = 0.5f;
+	private float scaler = 0.10f;
 	private SpriteRenderer sprender;
     public Camera mainCamera;
     Vector3 screenPos;
