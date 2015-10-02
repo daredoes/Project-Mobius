@@ -3,31 +3,42 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class button : MonoBehaviour {
+	//true  = p1 | false = p2
 	public bool p1;
+	//Is AI Player?
     public bool isAI;
+	//Keyboard launch key
 	public KeyCode launch = KeyCode.H;
+	//Spawned bar
 	public GameObject beatBar = null;
+	//Prefab of bar
 	public GameObject beatFab;
+	//Distance from center of button to center of bar
 	public float barDist = 0.5f;
+	//Percent scale of button
 	private float scaler = 0.10f;
+	//Sprite Renderer for flips and such
 	private SpriteRenderer sprender;
+	//Camera
     public Camera mainCamera;
-    Vector3 screenPos;
-    Vector3 worldPos;
+	//Color of button and bar
     public Color color;
+	//text for trigger
     public Text DisplayText;
+	//Beat that will interact with button
     public GameObject matchedBeat;
 
     void Awake()
     {
+		//Set camera
         mainCamera = Camera.main;
+		//Get SpriteRenderer
 		sprender = GetComponent<SpriteRenderer> ();
-		sprender.transform.localScale = sprender.transform.localScale += new Vector3 (scaler, scaler, scaler);
+		//Resize sprite
+		sprender.transform.localScale = sprender.transform.localScale + new Vector3 (scaler, scaler, scaler);
+		//Set display text
         DisplayText = GetComponent<Text>();
         DisplayText.GetComponent<Renderer>().sortingLayerID = transform.GetComponent<Renderer>().sortingLayerID;
-        screenPos = gameObject.transform.position;
-
-        worldPos = mainCamera.ScreenToWorldPoint(screenPos);
     }
 
     // Use this for initialization
