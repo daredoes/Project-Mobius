@@ -29,6 +29,13 @@ public class beatBouncer : MonoBehaviour
     public bool AIhit;
     public float missProb;
 	public int missRatio = 10;
+	public float passRate = 0f;
+
+	int countdown = 0;
+	int timeoutTimer = 15;
+	int timeoutRate = 1;
+
+	public bool active = false;
 
     void Awake()
     {
@@ -41,23 +48,28 @@ public class beatBouncer : MonoBehaviour
 	{
         isai = GetComponentInParent<button>().isAI;
         myBarBeat = GetComponentInParent<button>().matchedBeat;
-        Debug.Log(myBarBeat);
+        //Debug.Log(myBarBeat);
 
         gameObject.tag = "Floor";
         sprender = GetComponent<SpriteRenderer>();
         c = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.0f);
 		moving = false;
 		hollow = true;
-
+		//Easy
 		if (GameManager.gm.GetComponent<GameManager> ().difficulty == 0) {
 			missRatio = 5;
+			passRate = 0.75f;
 		}
+		//Medium
 		else if(GameManager.gm.GetComponent<GameManager> ().difficulty == 1){
 			missRatio = 7;
+			passRate = 0.5f;
 
 		}
+		//Hard
 		else if(GameManager.gm.GetComponent<GameManager> ().difficulty == 2){
 			missRatio = 10;
+			passRate = 0.25f;
 		}
 
         if (p1)
@@ -86,6 +98,7 @@ public class beatBouncer : MonoBehaviour
         //transform.position = startPosition;
 		distance = Mathf.Abs(GameManager.gm.centerPos.y - startPosition.y);
 		hitDistance = distance;
+		active = true;
 	}
 
 	public bool isAtStart ()
@@ -96,78 +109,71 @@ public class beatBouncer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-        
-        if (isai)
-        {
-            distanceFromBeat = Mathf.Abs(transform.position.y - myBarBeat.transform.position.y);
+        if (active) {
+			if (isai) {
+				distanceFromBeat = Mathf.Abs (transform.position.y - myBarBeat.transform.position.y);
 
-            missProb = Random.Range(0f, 1f);
-            Debug.Log(AIhit);
-
-            if(missProb*100 % missRatio != 0)
-            {
-                AIhit = true;
-            }
-            else
-            {
-                AIhit = false;
-            }
-
-            if (distanceFromBeat < hitDistance && AIhit)
-            {
-				if(p1 && matchedBeat.GetComponent<beat_init>().flip){
-					hit();
+				missProb = Random.Range (0f, 1f);
+				Debug.Log (countdown);
+				if (countdown > 0) {
+					countdown -= timeoutRate;
 				}
-				else if(!p1 && !matchedBeat.GetComponent<beat_init>().flip){
-					hit ();
-				}
-            }
-        }
+				Debug.Log (countdown);
 
-        if (fadeInColor)
-        {
-            fadeIn();
-        }
-        if(sprender.color.a >= 255.0f)
-        {
-            fadeInColor = false;
-        }
-		if (moving) {
-			if (flip == 1) {
-				if (gameObject.transform.position.y < startPosition.y + (distance)) {
-					gameObject.transform.Translate (new Vector2 (0, flip) * speed);
-				} else {
-					moving = false;
+				if (missProb > passRate && countdown == 0) {
+					AIhit = true;
+				} else if(countdown == 0) {
+					AIhit = false;
+					countdown = timeoutTimer;
 				}
-			} else if (flip == -1) {
-				if (gameObject.transform.position.y > startPosition.y - (distance)) {
-					gameObject.transform.Translate (new Vector2 (0, flip) * speed);
-				} else {
-					moving = false;
+
+				if (distanceFromBeat < hitDistance && AIhit) {
+					if (p1 && matchedBeat.GetComponent<beat_init> ().flip) {
+						hit ();
+					} else if (!p1 && !matchedBeat.GetComponent<beat_init> ().flip) {
+						hit ();
+					}
 				}
 			}
 
-		} else {
-			hollow = true;
-			if ((Vector2)gameObject.transform.position != (Vector2)startPosition) {
-				gameObject.transform.position = Vector2.MoveTowards (gameObject.transform.position, startPosition, speed * returnSpeedModifier);
+			if (fadeInColor) {
+				fadeIn ();
 			}
-            else
-            {
-                if(sprender.color.a != 0.0f)
-                {
-                    sprender.color = c;
-                }
-                else
-                {
-                    fadeOut();
-                }
-                /*
+			if (sprender.color.a >= 255.0f) {
+				fadeInColor = false;
+			}
+			if (moving) {
+				if (flip == 1) {
+					if (gameObject.transform.position.y < startPosition.y + (distance)) {
+						gameObject.transform.Translate (new Vector2 (0, flip) * speed);
+					} else {
+						moving = false;
+					}
+				} else if (flip == -1) {
+					if (gameObject.transform.position.y > startPosition.y - (distance)) {
+						gameObject.transform.Translate (new Vector2 (0, flip) * speed);
+					} else {
+						moving = false;
+					}
+				}
+
+			} else {
+				hollow = true;
+				if ((Vector2)gameObject.transform.position != (Vector2)startPosition) {
+					gameObject.transform.position = Vector2.MoveTowards (gameObject.transform.position, startPosition, speed * returnSpeedModifier);
+				} else {
+					if (sprender.color.a != 0.0f) {
+						sprender.color = c;
+					} else {
+						fadeOut ();
+					}
+					/*
                 if(sprender.enabled != false)
                 {
                     sprender.enabled = false;
                 } */
-            }
+				}
+			}
 		}
 
         

@@ -1,4 +1,4 @@
-using UnityEngine;
+	using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 public class player_main : MonoBehaviour
@@ -55,7 +55,7 @@ public class player_main : MonoBehaviour
     {
         isai = true;
 
-        player2Controls();
+       // player2Controls();
     }
 
     public void isPlayer1()

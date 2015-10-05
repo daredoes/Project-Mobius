@@ -214,9 +214,11 @@ public class GameManager : MonoBehaviour
 
 		//Set player1 as human
 		player1.GetComponent<player_main> ().isPlayer1 ();
+		player2.GetComponent<player_main> ().isPlayer2 ();
 
 		//Choose player2 through mode select
 		if (singlePlayer) {
+			player1.GetComponent<player_main> ().isAI ();
 			player2.GetComponent<player_main> ().isAI ();
 		} else if (localMultPlayer) {
 			player2.GetComponent<player_main> ().isPlayer2 ();
@@ -244,8 +246,8 @@ public class GameManager : MonoBehaviour
 			} else {
 				spawnButton1.transform.position = centerP1 + new Vector3 (seperatorIncrement / 2 * flip, sepHeight, 0);
 			}
-			spawnButton1.GetComponent<button> ().Spawned (true);
 			spawnButton1.GetComponent<button>().matchedBeat = newBeat;
+			spawnButton1.GetComponent<button> ().Spawned (true);
 			player1.GetComponent<player_main> ().addButton (spawnButton1);
 			spawnButton1.transform.SetParent(player1.transform, true);
 			
@@ -256,9 +258,8 @@ public class GameManager : MonoBehaviour
 			} else {
 				spawnButton2.transform.position = centerP2 + new Vector3 (seperatorIncrement / 2 * flip, sepHeight * -1.0f, 0);
 			}
-			
-			spawnButton2.GetComponent<button> ().Spawned (false);
 			spawnButton2.GetComponent<button>().matchedBeat = newBeat;
+			spawnButton2.GetComponent<button> ().Spawned (false);
 			player2.GetComponent<player_main> ().addButton (spawnButton2);
 			spawnButton2.transform.SetParent(player2.transform, true);
 

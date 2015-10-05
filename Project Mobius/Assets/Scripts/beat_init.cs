@@ -61,13 +61,13 @@ public class beat_init : MonoBehaviour
            // Debug.Log("YEnd-: " + (startPosition.y - travelLength));
             if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength)
             {
-                Debug.Log("Should be returning");
+                //Debug.Log("Should be returning");
 
                 camShake.Shake(camShakeAmount, 0.03f);
                 // Player Two
                 if (gameObject.transform.position.y < startPosition.y - travelLength)
                 {
-                    Debug.Log("Should be scoring");
+                    //Debug.Log("Should be scoring");
                     GameManager.gm.GetComponent<GameManager>().player2.GetComponent<player_main>().score += 1;
                 }
                 //Player One
