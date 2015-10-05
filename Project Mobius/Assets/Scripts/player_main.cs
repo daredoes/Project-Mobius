@@ -30,6 +30,24 @@ public class player_main : MonoBehaviour
         
     }
 
+	public void pause(){
+		foreach(GameObject b in buttons){
+			b.GetComponent<button>().pause();
+		}
+	}
+
+	public void unpause(){
+		foreach(GameObject b in buttons){
+			b.GetComponent<button>().unpause();
+		}
+	}
+
+	public void pauseFlip(){
+		foreach(GameObject b in buttons){
+			b.GetComponent<button>().pauseFlip();
+		}
+	}
+
     public void spawned()
     {
         Vector3 temp;

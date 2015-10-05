@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
 	public GameObject player1;
 	public GameObject player2;
 
+	//List to hold beats
+	public List<GameObject> beatList;
+
 	//How far the beat travels. Also 1/2 beat travelDiameter
 	float travelLength = 2.5f;
 	//Not sure how to use score
@@ -73,7 +76,35 @@ public class GameManager : MonoBehaviour
 
 	//0 = easy | 1 = medium | 2 = hard
 	public int difficulty;
-	
+
+	void unpause()
+	{
+		player1.GetComponent<player_main>().unpause();
+		player2.GetComponent<player_main>().unpause();
+		foreach(GameObject b in beatList){
+			b.GetComponent<beat_init>().unpause();
+		}
+	}
+
+	void pause()
+	{
+		player1.GetComponent<player_main>().pause();
+		player2.GetComponent<player_main>().pause();
+		foreach(GameObject b in beatList){
+			b.GetComponent<beat_init>().pause();
+		}
+	}
+
+	void pauseFlip()
+	{
+		player1.GetComponent<player_main>().pauseFlip();
+		player2.GetComponent<player_main>().pauseFlip();
+		foreach(GameObject b in beatList){
+			b.GetComponent<beat_init>().pauseFlip();
+		}
+	}
+
+
 	void Awake ()
 	{
 		//Set Global Game Manager
@@ -127,6 +158,8 @@ public class GameManager : MonoBehaviour
 			DrawScene (ButtonCount, playerOne, playerTwo);
 			CountDownPanel.SetActive (false);
             //Activate Game
+			unpause();
+
 		}
         
         //When the game manager has drawn the scene, put the scores on the text fields with in the game
@@ -134,6 +167,10 @@ public class GameManager : MonoBehaviour
 			playerOneScore.text = player1.GetComponent<player_main> ().score.ToString ();
 			
 			playerTwoScore.text = player2.GetComponent<player_main> ().score.ToString ();
+
+			if(Input.GetKeyDown(KeyCode.P)){
+				pauseFlip();
+			}
 		}
 
 		//When game has begun, Start subtracting time from the in game timer
@@ -233,7 +270,7 @@ public class GameManager : MonoBehaviour
 				newBeat.GetComponent<beat_init> ().travelLength = travelLength - sepHeight;
 			}
 			
-			
+			beatList.Add(newBeat);
 			newBeat.GetComponent<beat_init> ().startGame ();
 			
 			GameObject spawnButton1 = (GameObject)Instantiate (button);
@@ -282,4 +319,5 @@ public class GameManager : MonoBehaviour
 		hasDrawnScene = true;
 	}
     #endregion
+	
 }

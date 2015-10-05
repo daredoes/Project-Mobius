@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class button : MonoBehaviour
+public class button : playableObject
 {
 	//true  = p1 | false = p2
 	public bool p1;
@@ -50,6 +50,21 @@ public class button : MonoBehaviour
 		gameObject.GetComponent<Button> ().onClick.AddListener (() => {
 			shootBar ();
 		});	
+	}
+
+	public override void pause(){
+		base.pause ();
+		beatBar.GetComponent<beatBouncer> ().pause ();
+	}
+
+	public override void unpause(){
+		base.unpause ();
+		beatBar.GetComponent<beatBouncer> ().unpause ();
+	}
+
+	public override void pauseFlip(){
+		base.pauseFlip ();
+		beatBar.GetComponent<beatBouncer> ().pauseFlip ();
 	}
 
 	public void claimed ()
@@ -110,41 +125,46 @@ public class button : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetKeyDown (launch)) {
-			shootBar ();
-		}
-		/*if (Input.GetMouseButtonDown (0))
+		if (activated) {
+			if (!isAI) {
+				if (Input.GetKeyDown (launch)) {
+					shootBar ();
+				}
+				/*if (Input.GetMouseButtonDown (0))
 		{
 			if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition))) {
 				beatBar.SendMessage("hit");
 			}
 		} */
 
-		var touchCount = Input.touchCount;
-		for (var i = 0; i < touchCount; i++) {
-			var touch = Input.GetTouch (i);
-			if (touch.phase == TouchPhase.Began) {
-				if (!tapped) {
-					if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (touch.position))) {
-						tapped = true;
-						beatBar.GetComponent<beatBouncer> ().hit ();
+				var touchCount = Input.touchCount;
+				for (var i = 0; i < touchCount; i++) {
+					var touch = Input.GetTouch (i);
+					if (touch.phase == TouchPhase.Began) {
+						if (!tapped) {
+							if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (touch.position))) {
+								tapped = true;
+								beatBar.GetComponent<beatBouncer> ().hit ();
+							}
+						}
+					}
+					if (touch.phase == TouchPhase.Moved) {
+						if (!tapped) {
+							if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (touch.position))) {
+								tapped = true;
+								beatBar.GetComponent<beatBouncer> ().hit ();
+							}
+						}
+					}
+					if (touch.phase == TouchPhase.Ended) {
+						tapped = false;
 					}
 				}
-			}
-			if (touch.phase == TouchPhase.Moved) {
-				if (!tapped) {
-					if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (touch.position))) {
-						tapped = true;
-						beatBar.GetComponent<beatBouncer> ().hit ();
-					}
-				}
-			}
-			if (touch.phase == TouchPhase.Ended) {
-				tapped = false;
 			}
 		}
 		//Debug.Log("SCREENPOS: " + screenPos);
 		//Debug.Log("WORLDPOS: " + worldPos);
 
 	}
+
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class beat_init : MonoBehaviour
+public class beat_init : playableObject
 {
 	public bool flip;
 	bool moving;
@@ -16,8 +16,6 @@ public class beat_init : MonoBehaviour
     /*camerShake Variables*/
     private float camShakeAmount = 0.02f;
     CameraShake camShake;
-
-    bool active = true;
 
 
     // Use this for initialization
@@ -37,17 +35,11 @@ public class beat_init : MonoBehaviour
 		flip = false;
 		moving = true;
 	}
-	
-    public void pause()
-    {
-        active = false;
-    }
-
 	// Update is called once per frame
 	void Update ()
 	{
         gameObject.transform.rotation = currentRotation;
-        if (game_started)
+        if (activated)
         {
             //Player 1 Side
             if (flip)
@@ -126,6 +118,10 @@ public class beat_init : MonoBehaviour
 	void OnCollisionEnter2D (Collision2D other)
 	{
 	
+	}
+
+	public void spawned(){
+		unpause ();
 	}
 }
 	

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class beatBouncer : MonoBehaviour
+public class beatBouncer : playableObject
 {
 	//flip = -1 (Moves down) flip = 1 (Moves up)
 	[Range(-1, 1)]
@@ -34,8 +34,6 @@ public class beatBouncer : MonoBehaviour
 	int countdown = 0;
 	int timeoutTimer = 15;
 	int timeoutRate = 1;
-
-	public bool active = false;
 
     void Awake()
     {
@@ -98,7 +96,6 @@ public class beatBouncer : MonoBehaviour
         //transform.position = startPosition;
 		distance = Mathf.Abs(GameManager.gm.centerPos.y - startPosition.y);
 		hitDistance = distance;
-		active = true;
 	}
 
 	public bool isAtStart ()
@@ -109,16 +106,16 @@ public class beatBouncer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-        if (active) {
+        if (activated) {
 			if (isai) {
 				distanceFromBeat = Mathf.Abs (transform.position.y - myBarBeat.transform.position.y);
 
 				missProb = Random.Range (0f, 1f);
-				Debug.Log (countdown);
+				//Debug.Log (countdown);
 				if (countdown > 0) {
 					countdown -= timeoutRate;
 				}
-				Debug.Log (countdown);
+				//Debug.Log (countdown);
 
 				if (missProb > passRate && countdown == 0) {
 					AIhit = true;
@@ -128,9 +125,9 @@ public class beatBouncer : MonoBehaviour
 				}
 
 				if (distanceFromBeat < hitDistance && AIhit) {
-					if (p1 && matchedBeat.GetComponent<beat_init> ().flip) {
+					if (p1 && myBarBeat.GetComponent<beat_init> ().flip) {
 						hit ();
-					} else if (!p1 && !matchedBeat.GetComponent<beat_init> ().flip) {
+					} else if (!p1 && !myBarBeat.GetComponent<beat_init> ().flip) {
 						hit ();
 					}
 				}
