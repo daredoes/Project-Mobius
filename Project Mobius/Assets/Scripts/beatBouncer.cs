@@ -103,7 +103,12 @@ public class beatBouncer : MonoBehaviour
 
             if (distanceFromBeat < hitDistance && AIhit)
             {
-                hit();
+				if(p1 && matchedBeat.GetComponent<beat_init>().flip){
+					hit();
+				}
+				else if(!p1 && !matchedBeat.GetComponent<beat_init>().flip){
+					hit ();
+				}
             }
         }
 

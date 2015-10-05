@@ -3,7 +3,7 @@ using System.Collections;
 
 public class beat_init : MonoBehaviour
 {
-	bool flip;
+	public bool flip;
 	bool moving;
     bool game_started = false;
 	public float
