@@ -70,6 +70,9 @@ public class GameManager : MonoBehaviour
 	public bool singlePlayer;
 	public bool localMultPlayer;
 	public bool online;
+
+	//0 = easy | 1 = medium | 2 = hard
+	public int difficulty;
 	
 	void Awake ()
 	{
@@ -161,6 +164,7 @@ public class GameManager : MonoBehaviour
 	public void One ()
 	{
 		ButtonCount = 1;
+		difficulty = 0;
 		//DrawScene(ButtonCount, playerOne, playerTwo);
 		startWait = true;
 		ButtonCountSelectPanel.SetActive (false);
@@ -173,6 +177,7 @@ public class GameManager : MonoBehaviour
 	public void Two ()
 	{
 		ButtonCount = 3;
+		difficulty = 1;
 		//DrawScene(ButtonCount, playerOne, playerTwo);
 		startWait = true;
 		ButtonCountSelectPanel.SetActive (false);
@@ -184,6 +189,7 @@ public class GameManager : MonoBehaviour
 	public void Three ()
 	{
 		ButtonCount = 5;
+		difficulty = 2;
 		//DrawScene(ButtonCount, playerOne, playerTwo);
 		startWait = true;
 		ButtonCountSelectPanel.SetActive (false);

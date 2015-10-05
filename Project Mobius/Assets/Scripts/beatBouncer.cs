@@ -28,6 +28,7 @@ public class beatBouncer : MonoBehaviour
     public float hitDistance = 1f;
     public bool AIhit;
     public float missProb;
+	public int missRatio = 10;
 
     void Awake()
     {
@@ -48,6 +49,16 @@ public class beatBouncer : MonoBehaviour
 		moving = false;
 		hollow = true;
 
+		if (GameManager.gm.GetComponent<GameManager> ().difficulty == 0) {
+			missRatio = 5;
+		}
+		else if(GameManager.gm.GetComponent<GameManager> ().difficulty == 1){
+			missRatio = 7;
+
+		}
+		else if(GameManager.gm.GetComponent<GameManager> ().difficulty == 2){
+			missRatio = 10;
+		}
 
         if (p1)
         {
@@ -74,6 +85,7 @@ public class beatBouncer : MonoBehaviour
         startPosition = transform.position;
         //transform.position = startPosition;
 		distance = Mathf.Abs(GameManager.gm.centerPos.y - startPosition.y);
+		hitDistance = distance;
 	}
 
 	public bool isAtStart ()
@@ -92,7 +104,7 @@ public class beatBouncer : MonoBehaviour
             missProb = Random.Range(0f, 1f);
             Debug.Log(AIhit);
 
-            if(missProb*100 % 10 != 0)
+            if(missProb*100 % missRatio != 0)
             {
                 AIhit = true;
             }
