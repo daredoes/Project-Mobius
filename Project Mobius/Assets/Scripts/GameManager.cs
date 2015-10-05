@@ -239,6 +239,7 @@ public class GameManager : MonoBehaviour
 				spawnButton1.transform.position = centerP1 + new Vector3 (seperatorIncrement / 2 * flip, sepHeight, 0);
 			}
 			spawnButton1.GetComponent<button> ().Spawned (true);
+			spawnButton1.GetComponent<button>().matchedBeat = newBeat;
 			player1.GetComponent<player_main> ().addButton (spawnButton1);
 			spawnButton1.transform.SetParent(player1.transform, true);
 			
@@ -251,6 +252,7 @@ public class GameManager : MonoBehaviour
 			}
 			
 			spawnButton2.GetComponent<button> ().Spawned (false);
+			spawnButton2.GetComponent<button>().matchedBeat = newBeat;
 			player2.GetComponent<player_main> ().addButton (spawnButton2);
 			spawnButton2.transform.SetParent(player2.transform, true);
 
