@@ -6,8 +6,7 @@ public class beat_init : MonoBehaviour
 	public bool flip;
 	bool moving;
     bool game_started = false;
-	public float
-		travelLength;
+	public float travelLength;
 	Vector2 startPosition;
     Quaternion currentRotation;
 	public Color sideColor;
@@ -17,6 +16,8 @@ public class beat_init : MonoBehaviour
     /*camerShake Variables*/
     private float camShakeAmount = 0.02f;
     CameraShake camShake;
+
+    bool active = true;
 
 
     // Use this for initialization
@@ -37,6 +38,11 @@ public class beat_init : MonoBehaviour
 		moving = true;
 	}
 	
+    public void pause()
+    {
+        active = false;
+    }
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -47,7 +53,6 @@ public class beat_init : MonoBehaviour
             if (flip)
             {
                 sideColor = GameManager.gm.GetComponent<GameManager>().player1.gameObject.GetComponent<player_main>().color;
-
             }
             //Player 2 Side
             else

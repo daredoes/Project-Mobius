@@ -102,8 +102,9 @@ public class GameManager : MonoBehaviour
 		startTimer = GameObject.FindGameObjectWithTag ("timer").GetComponent<Text> ();
 		gameTimer = GameObject.FindGameObjectWithTag ("inGameTimer").GetComponent<Text> ();   
 	}
-	
-	void Update ()
+
+    #region UPDATE METHOD
+    void Update ()
 	{
 		//change start timer text
 		startTimer.text = Mathf.CeilToInt (startWaitSec).ToString ();
@@ -112,13 +113,7 @@ public class GameManager : MonoBehaviour
 		gameTimer.text = string.Format ("Timer: {0}:{1}:{2}", minutes, seconds, (int)miliseconds);
 
 
-		//Cristian please comment how this chunk works
-		//Cristian
-		//Cristian
-		//Cristian
-		//Cristian
-		//Cristian
-		//Cristian
+		//StartWaitSec is seconds before game if it's greater than 0 take time off the timer.
 		if (startWait) {
 			if (startWaitSec > 0) {
 				startWaitSec -= Time.deltaTime;
@@ -127,23 +122,21 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		//Cristian
-		//Cristian
+        //If the timer has gone to zero draw the game scene
 		if (startWaitSec == 0 && !hasDrawnScene) {
 			DrawScene (ButtonCount, playerOne, playerTwo);
 			CountDownPanel.SetActive (false);
+            //Activate Game
 		}
-
-		//Cristian
-		//Cristian
+        
+        //When the game manager has drawn the scene, put the scores on the text fields with in the game
 		if (hasDrawnScene) {
 			playerOneScore.text = player1.GetComponent<player_main> ().score.ToString ();
 			
 			playerTwoScore.text = player2.GetComponent<player_main> ().score.ToString ();
 		}
 
-		//Cristian
-		//Cristian
+		//When game has begun, Start subtracting time from the in game timer
 		if (startWaitSec == 0 && hasDrawnScene) {
 			if (miliseconds <= 0) {
 				if (seconds <= 0) {
@@ -158,10 +151,14 @@ public class GameManager : MonoBehaviour
 			miliseconds -= Time.deltaTime * 100;
 		}
 	}
+    #endregion
 
-	//Cristian
-	//Cristian
-	public void One ()
+    #region DIFFICULTY METHODS
+    /// <summary>
+    /// Choose One Three or Five buttons. Easy Med Hard
+    /// set the start wait to begin once the player has selected the difficulty
+    /// </summary>
+    public void One ()
 	{
 		ButtonCount = 1;
 		difficulty = 0;
@@ -170,10 +167,7 @@ public class GameManager : MonoBehaviour
 		ButtonCountSelectPanel.SetActive (false);
 		CountDownPanel.SetActive (true);
 	}
-	
-
-	//Cristian
-	//Cristian
+    
 	public void Two ()
 	{
 		ButtonCount = 3;
@@ -196,9 +190,12 @@ public class GameManager : MonoBehaviour
 		CountDownPanel.SetActive (true);
 	}
 
-	//Cristian
-	//Cristian
-	public void DrawScene (int buttonAmount, GameObject p1, GameObject p2)
+    #endregion
+
+    #region DRAW GAME SCENE METHOD
+    //Cristian
+    //Cristian
+    public void DrawScene (int buttonAmount, GameObject p1, GameObject p2)
 	{
 		//Temp variables for placement purposes
 		int count = 0;
@@ -284,4 +281,5 @@ public class GameManager : MonoBehaviour
 		//Scene Drawn
 		hasDrawnScene = true;
 	}
+    #endregion
 }
