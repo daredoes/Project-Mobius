@@ -4,16 +4,9 @@ using System.Collections;
 
 public class button : playableObject
 {
-	//true  = p1 | false = p2
-	public bool p1;
-	//Is AI Player?
-	public bool isAI;
-	//Keyboard launch key
-	public KeyCode launch = KeyCode.H;
-	//Spawned bar
-	public GameObject beatBar = null;
-	//Prefab of bar
-	public GameObject beatFab;
+	/*
+	 * UI Variables
+	 */
 	//Distance from center of button to center of bar
 	public float barDist = 0.5f;
 	//Percent scale of button
@@ -26,9 +19,25 @@ public class button : playableObject
 	public Color color;
 	//text for trigger
 	public Text DisplayText;
+	///////////////////////////////////////////////
+
+	/*
+	 * Data Variables
+	 */
+	//true  = p1 | false = p2
+	public bool p1;
+	//Is AI Player?
+	public bool isAI;
+	//Keyboard launch key
+	public KeyCode launch = KeyCode.H;
+	//Spawned bar
+	public GameObject beatBar = null;
+	//Prefab of bar
+	public GameObject beatFab;
 	//Beat that will interact with button
 	public GameObject matchedBeat;
 	public bool tapped = false;
+	///////////////////////////////////////////////
 
 	void Awake ()
 	{
@@ -52,17 +61,20 @@ public class button : playableObject
 		});	
 	}
 
-	public override void pause(){
+	public override void pause ()
+	{
 		base.pause ();
 		beatBar.GetComponent<beatBouncer> ().pause ();
 	}
 
-	public override void unpause(){
+	public override void unpause ()
+	{
 		base.unpause ();
 		beatBar.GetComponent<beatBouncer> ().unpause ();
 	}
 
-	public override void pauseFlip(){
+	public override void pauseFlip ()
+	{
 		base.pauseFlip ();
 		beatBar.GetComponent<beatBouncer> ().pauseFlip ();
 	}
@@ -104,10 +116,9 @@ public class button : playableObject
 		//Debug.Log("P1: " + p1);
 
 		if (p1) {
-			beatBar.transform.position = transform.position + new Vector3 (0, barDist * 1 * transform.localScale.y, 0);
 			spawnBar (1);
 		} else {
-			beatBar.transform.position = transform.position + new Vector3 (0, barDist * -1 * transform.localScale.y, 0);
+
 			spawnBar (-1);
 		}
 
@@ -116,6 +127,7 @@ public class button : playableObject
 
 	void spawnBar (int aboveBelow)
 	{
+		beatBar.transform.position = transform.position + new Vector3 (0, barDist * aboveBelow * transform.localScale.y, 0);
 		//beatBar.transform.position;
 		beatBar.GetComponent<beatBouncer> ().p1 = p1;
 		//beatBar.GetComponent<beatBouncer>().launch = launch;
@@ -130,12 +142,6 @@ public class button : playableObject
 				if (Input.GetKeyDown (launch)) {
 					shootBar ();
 				}
-				/*if (Input.GetMouseButtonDown (0))
-		{
-			if (GetComponent<Collider2D> () == Physics2D.OverlapPoint (Camera.main.ScreenToWorldPoint (Input.mousePosition))) {
-				beatBar.SendMessage("hit");
-			}
-		} */
 
 				var touchCount = Input.touchCount;
 				for (var i = 0; i < touchCount; i++) {
@@ -162,9 +168,6 @@ public class button : playableObject
 				}
 			}
 		}
-		//Debug.Log("SCREENPOS: " + screenPos);
-		//Debug.Log("WORLDPOS: " + worldPos);
-
 	}
 
 }

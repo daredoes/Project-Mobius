@@ -3,20 +3,26 @@ using System.Collections;
 
 public class beat_init : playableObject
 {
-	public bool flip;
-	bool moving;
-    bool game_started = false;
-	public float travelLength;
-	Vector2 startPosition;
-    Quaternion currentRotation;
+    /*
+     * UI Variables
+	 */
+    private float camShakeAmount = 0.02f;
+    CameraShake camShake;
+	Quaternion currentRotation;
+	///////////////////////////////////////////////
+
+	/*
+	 * Data Variables
+	 */
 	public Color sideColor;
 	[Range(0.0f, .2f)]
 	public float step = .05f;
-
-    /*camerShake Variables*/
-    private float camShakeAmount = 0.02f;
-    CameraShake camShake;
-
+	public bool flip;
+	bool moving;
+	bool game_started = false;
+	public float travelLength;
+	Vector2 startPosition;
+	///////////////////////////////////////////////
 
     // Use this for initialization
     void Start ()
@@ -52,14 +58,8 @@ public class beat_init : playableObject
                 sideColor = GameManager.gm.GetComponent<GameManager>().player2.gameObject.GetComponent<player_main>().color;
             }
             gameObject.GetComponent<SpriteRenderer>().color = sideColor;
-           // Debug.Log("Y: " + gameObject.transform.position.y);
-           // Debug.Log("YStart: " + startPosition.y);
-           // Debug.Log("YEnd+: " + (startPosition.y + travelLength));
-           // Debug.Log("YEnd-: " + (startPosition.y - travelLength));
             if (gameObject.transform.position.y < startPosition.y - travelLength || gameObject.transform.position.y > startPosition.y + travelLength)
             {
-                //Debug.Log("Should be returning");
-
                 camShake.Shake(camShakeAmount, 0.03f);
                 // Player Two
                 if (gameObject.transform.position.y < startPosition.y - travelLength)
@@ -88,17 +88,6 @@ public class beat_init : playableObject
                 }
             }
         }
-        /*
-		if (Input.GetKeyDown (KeyCode.J)) {
-			bounce ();
-		}
-		if (Input.GetKeyDown (KeyCode.K)) {
-			moving = !moving;
-		}
-		if (Input.GetKeyDown (KeyCode.L)) {
-			gameObject.transform.Translate (Vector2.up * step);
-		} */
-
 	
 	}
     public void startGame()
@@ -113,11 +102,6 @@ public class beat_init : playableObject
 		temp.y *= -1;
         temp.x *= -1;
 		gameObject.transform.localScale = temp;
-	}
-
-	void OnCollisionEnter2D (Collision2D other)
-	{
-	
 	}
 
 	public void spawned(){
