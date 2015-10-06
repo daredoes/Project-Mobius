@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class godly : MonoBehaviour {
-	public bool audio;
+	//public bool audio;
 	// Use this for initialization
 	void Start () {
-		audio = false;
+		//audio = false;
 	}
 	
 	// Update is called once per frame

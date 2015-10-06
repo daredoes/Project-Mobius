@@ -252,12 +252,12 @@ public class GameManager : MonoBehaviour
 	}
     #endregion
 
-	void placeButton (GameObject butt, Vector2 cPos, int flip, int count, GameObject newBeat, bool spawnBool)
+	void placeButton (GameObject butt, Vector2 cPos, int flip, int count, GameObject newBeat, bool spawnBool, int i)
 	{
 		if (i < 3) {
-			butt.transform.position = cPos + new Vector3 (seperatorIncrement * flip * count, 0, 0);
+			butt.transform.position = cPos + new Vector2 (seperatorIncrement * flip * count, 0);
 		} else {
-			butt.transform.position = cPos + new Vector3 (seperatorIncrement / 2 * flip, sepHeight, 0);
+			butt.transform.position = cPos + new Vector2 (seperatorIncrement / 2 * flip, sepHeight);
 		}
 		butt.GetComponent<button> ().matchedBeat = newBeat;
 		butt.GetComponent<button> ().Spawned (spawnBool);
@@ -303,16 +303,15 @@ public class GameManager : MonoBehaviour
 			}
 			
 			beatList.Add (newBeat);
-			newBeat.GetComponent<beat_init> ().startGame ();
 			
 			GameObject spawnButton1 = (GameObject)Instantiate (button);
-			placeButton (spawnButton1, centerP1, flip, count, newBeat, true);
+			placeButton (spawnButton1, centerP1, flip, count, newBeat, true, i);
 			player1.GetComponent<player_main> ().addButton (spawnButton1);
 			spawnButton1.transform.SetParent (player1.transform, true);
 			
 			GameObject spawnButton2 = (GameObject)Instantiate (button);
 			//spawnButton2.transform.SetParent(buttonCanvas.transform);
-			placeButton (spawnButton2, centerP2, flip, count, newBeat, false);
+			placeButton (spawnButton2, centerP2, flip, count, newBeat, false, i);
 			player2.GetComponent<player_main> ().addButton (spawnButton2);
 			spawnButton2.transform.SetParent (player2.transform, true);
 

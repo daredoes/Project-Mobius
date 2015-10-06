@@ -19,7 +19,6 @@ public class beat_init : playableObject
 	public float step = .05f;
 	public bool flip;
 	bool moving;
-	bool game_started = false;
 	public float travelLength;
 	Vector2 startPosition;
 	///////////////////////////////////////////////
@@ -90,10 +89,6 @@ public class beat_init : playableObject
         }
 	
 	}
-    public void startGame()
-    {
-        game_started = true;
-    }
 
 	public void bounce ()
 	{
