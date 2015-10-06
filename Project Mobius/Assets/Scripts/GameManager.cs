@@ -6,51 +6,58 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager gm = null;
+
+	/*
+	 * Player Variables
+	 */
 	//Scenes that Cristian made for placing things around.
 	public GameObject playerOne;
 	public GameObject playerTwo;
 	//Objects Daniel made that hold variable data on each player.
 	public GameObject player1;
 	public GameObject player2;
-
-	//List to hold beats
-	public List<GameObject> beatList;
-
-	//How far the beat travels. Also 1/2 beat travelDiameter
-	float travelLength = 2.5f;
-	//Not sure how to use score
-	public int score;
-	//Distance between buttons when placed
-	public float seperatorIncrement = 1.0f;
-	private float sepHeight = 0.25f;
-	//center point for 1st beat
-	public Vector2 centerPos = new Vector2 (0, 0);
 	//center point for P1 1st button
 	Vector3 centerP1 = new Vector3 (0, -2.5f, 0);
 	//center point for P2 1st button
 	Vector3 centerP2 = new Vector3 (0, 2.5f, 0);
-	
-	//Button Prefab
-	public GameObject button;
-	
-	//Beat Prefab
-	public GameObject beat;
-	
 	//Player Prefab
 	public GameObject player;
-	
+	///////////////////////////////////////////////
+
+	/*
+	 * Beat Variables
+	 */
+	//List to hold beats
+	public List<GameObject> beatList;
+	//How far the beat travels. Also 1/2 beat travelDiameter
+	float travelLength = 2.5f;
+	//center point for 1st beat
+	public Vector2 centerPos = new Vector2 (0, 0);
+	//Beat Prefab
+	public GameObject beat;
+	///////////////////////////////////////////////
+
+	/*
+	 * Button Variables
+	 */
+	//Distance between buttons when placed
+	public float seperatorIncrement = 1.0f;
+	private float sepHeight = 0.25f;
+	//Button Prefab
+	public GameObject button;
 	//Bar Prefab
 	public GameObject bar;
-	
+	///////////////////////////////////////////////
+
+	/*
+	 * UI Variables
+	 */
 	//countDown Prfab
 	public GameObject CountDownPanel;
-	
 	//Reference to Button Selection Panel/other UI elements to toggle on and off
 	public GameObject ButtonCountSelectPanel;
-	
 	//How many bars does the player want to use
 	public int ButtonCount;
-	
 	/*Beginning timer variables*/
 	bool startWait = false;
 	public float startWaitSec = 3f;
@@ -62,74 +69,54 @@ public class GameManager : MonoBehaviour
 	float minutes = 1f;
 	float seconds = 0;
 	float miliseconds = 0;
-	
 	//Player One Text Score
 	public Text playerOneScore;
-	
 	//Player Two Text Score
 	public Text playerTwoScore;
-	
+	///////////////////////////////////////////////
+
+	/*
+	 * Game Variables
+	 */
 	//USE AI SCRIPT
 	public bool singlePlayer;
 	public bool localMultPlayer;
 	public bool online;
-
 	//0 = easy | 1 = medium | 2 = hard
 	public int difficulty;
-
-	void unpause()
-	{
-		player1.GetComponent<player_main>().unpause();
-		player2.GetComponent<player_main>().unpause();
-		foreach(GameObject b in beatList){
-			b.GetComponent<beat_init>().unpause();
-		}
-	}
-
-	void pause()
-	{
-		player1.GetComponent<player_main>().pause();
-		player2.GetComponent<player_main>().pause();
-		foreach(GameObject b in beatList){
-			b.GetComponent<beat_init>().pause();
-		}
-	}
-
-	void pauseFlip()
-	{
-		player1.GetComponent<player_main>().pauseFlip();
-		player2.GetComponent<player_main>().pauseFlip();
-		foreach(GameObject b in beatList){
-			b.GetComponent<beat_init>().pauseFlip();
-		}
-	}
-
+	///////////////////////////////////////////////
 
 	void Awake ()
 	{
-		//Set Global Game Manager
-		//Access with GameManager.gm
+		//Set Global Game Manager | Access with GameManager.gm
 		gm = this;
-		//Set Preferences for Modes
+		///////////////////////////////////////////////
+
+		/*
+		 * Set Preferences for Modes
+		 */
 		singlePlayer = Prefs.playerPrefs.single;
 		localMultPlayer = Prefs.playerPrefs.local;
 		online = Prefs.playerPrefs.online;
-		//CountDownPanel = GameObject.FindGameObjectWithTag("countDownUI");
-		//ButtonCountSelectPanel = GameObject.FindGameObjectWithTag("buttonSelectionUI");
-		//playerOneScore = GameObject.FindGameObjectWithTag("playerOneText").GetComponent<Text>();
-		//playerTwoScore = GameObject.FindGameObjectWithTag("playerTwoText").GetComponent<Text>();
+		///////////////////////////////////////////////
 
 		//Display Panel
 		ButtonCountSelectPanel.SetActive (true);
+		///////////////////////////////////////////////
 
-		//Set 1st button position for both players
+		/*
+		 * Set 1st button position for both players
+		 */
 		centerP1 = new Vector3 (0, travelLength * -1, 0);
 		centerP2 = new Vector3 (0, travelLength, 0);
+		///////////////////////////////////////////////
 	}
 	
 	void Start ()
 	{            
-		/*MAKING A WAITING FUNCTION TO START SO THE PLAYERS HAVE A VISUAL QUEUE*/
+		/*
+		 * MAKING A WAITING FUNCTION TO START SO THE PLAYERS HAVE A VISUAL QUEUE
+		 */
 		startTimer = GameObject.FindGameObjectWithTag ("timer").GetComponent<Text> ();
 		gameTimer = GameObject.FindGameObjectWithTag ("inGameTimer").GetComponent<Text> ();   
 	}
@@ -137,13 +124,19 @@ public class GameManager : MonoBehaviour
     #region UPDATE METHOD
     void Update ()
 	{
+		/*
+		 * Modify Timers
+		 */
 		//change start timer text
 		startTimer.text = Mathf.CeilToInt (startWaitSec).ToString ();
 
 		//Update in game timer
 		gameTimer.text = string.Format ("Timer: {0}:{1}:{2}", minutes, seconds, (int)miliseconds);
+		///////////////////////////////////////////////
 
-
+		/*
+		 * Game Start Timer Activation
+		 */
 		//StartWaitSec is seconds before game if it's greater than 0 take time off the timer.
 		if (startWait) {
 			if (startWaitSec > 0) {
@@ -161,8 +154,12 @@ public class GameManager : MonoBehaviour
 			unpause();
 
 		}
+		///////////////////////////////////////////////
         
-        //When the game manager has drawn the scene, put the scores on the text fields with in the game
+        /*
+         * In Game Scene Code
+         */
+		//When the game manager has drawn the scene, put the scores on the text fields with in the game
 		if (hasDrawnScene) {
 			playerOneScore.text = player1.GetComponent<player_main> ().score.ToString ();
 			
@@ -171,25 +168,55 @@ public class GameManager : MonoBehaviour
 			if(Input.GetKeyDown(KeyCode.P)){
 				pauseFlip();
 			}
+			//When game has begun, Start subtracting time from the in game timer
+			if (startWaitSec == 0) {
+				if (miliseconds <= 0) {
+					if (seconds <= 0) {
+						minutes--;
+						seconds = 59;
+					} else if (seconds >= 0) {
+						seconds--;
+					}
+					
+					miliseconds = 100;
+				}
+				miliseconds -= Time.deltaTime * 100;
+			}
 		}
 
-		//When game has begun, Start subtracting time from the in game timer
-		if (startWaitSec == 0 && hasDrawnScene) {
-			if (miliseconds <= 0) {
-				if (seconds <= 0) {
-					minutes--;
-					seconds = 59;
-				} else if (seconds >= 0) {
-					seconds--;
-				}
-				
-				miliseconds = 100;
-			}
-			miliseconds -= Time.deltaTime * 100;
-		}
+
 	}
     #endregion
 
+	#region Pausing
+	void unpause()
+	{
+		player1.GetComponent<player_main>().unpause();
+		player2.GetComponent<player_main>().unpause();
+		foreach(GameObject b in beatList){
+			b.GetComponent<beat_init>().unpause();
+		}
+	}
+	
+	void pause()
+	{
+		player1.GetComponent<player_main>().pause();
+		player2.GetComponent<player_main>().pause();
+		foreach(GameObject b in beatList){
+			b.GetComponent<beat_init>().pause();
+		}
+	}
+	
+	void pauseFlip()
+	{
+		player1.GetComponent<player_main>().pauseFlip();
+		player2.GetComponent<player_main>().pauseFlip();
+		foreach(GameObject b in beatList){
+			b.GetComponent<beat_init>().pauseFlip();
+		}
+	}
+	#endregion
+	
     #region DIFFICULTY METHODS
     /// <summary>
     /// Choose One Three or Five buttons. Easy Med Hard
@@ -199,39 +226,43 @@ public class GameManager : MonoBehaviour
 	{
 		ButtonCount = 1;
 		difficulty = 0;
-		//DrawScene(ButtonCount, playerOne, playerTwo);
-		startWait = true;
-		ButtonCountSelectPanel.SetActive (false);
-		CountDownPanel.SetActive (true);
+		activateScene ();
 	}
     
 	public void Two ()
 	{
 		ButtonCount = 3;
 		difficulty = 1;
-		//DrawScene(ButtonCount, playerOne, playerTwo);
-		startWait = true;
-		ButtonCountSelectPanel.SetActive (false);
-		CountDownPanel.SetActive (true);
+		activateScene ();
 	}
-
-	//Cristian
-	//Cristian
+	
 	public void Three ()
 	{
 		ButtonCount = 5;
 		difficulty = 2;
-		//DrawScene(ButtonCount, playerOne, playerTwo);
+		activateScene ();
+
+	}
+
+	void activateScene()
+	{
 		startWait = true;
 		ButtonCountSelectPanel.SetActive (false);
 		CountDownPanel.SetActive (true);
 	}
-
     #endregion
 
+	void placeButton(GameObject butt, Vector2 cPos, int flip, int count, GameObject newBeat, bool spawnBool){
+		if (i < 3) {
+			butt.transform.position = cPos + new Vector3 (seperatorIncrement * flip * count, 0, 0);
+		} else {
+			butt.transform.position = cPos + new Vector3 (seperatorIncrement / 2 * flip, sepHeight, 0);
+		}
+		butt.GetComponent<button>().matchedBeat = newBeat;
+		butt.GetComponent<button> ().Spawned (spawnBool);
+	}
+
     #region DRAW GAME SCENE METHOD
-    //Cristian
-    //Cristian
     public void DrawScene (int buttonAmount, GameObject p1, GameObject p2)
 	{
 		//Temp variables for placement purposes
@@ -274,26 +305,13 @@ public class GameManager : MonoBehaviour
 			newBeat.GetComponent<beat_init> ().startGame ();
 			
 			GameObject spawnButton1 = (GameObject)Instantiate (button);
-			// spawnButton1.transform.SetParent(buttonCanvas.transform);
-			if (i < 3) {
-				spawnButton1.transform.position = centerP1 + new Vector3 (seperatorIncrement * flip * count, 0, 0);
-			} else {
-				spawnButton1.transform.position = centerP1 + new Vector3 (seperatorIncrement / 2 * flip, sepHeight, 0);
-			}
-			spawnButton1.GetComponent<button>().matchedBeat = newBeat;
-			spawnButton1.GetComponent<button> ().Spawned (true);
+			placeButton(spawnButton1, centerP1, flip, count, newBeat, true);
 			player1.GetComponent<player_main> ().addButton (spawnButton1);
 			spawnButton1.transform.SetParent(player1.transform, true);
 			
 			GameObject spawnButton2 = (GameObject)Instantiate (button);
 			//spawnButton2.transform.SetParent(buttonCanvas.transform);
-			if (i < 3) {
-				spawnButton2.transform.position = centerP2 + new Vector3 (seperatorIncrement * flip * count, 0, 0);
-			} else {
-				spawnButton2.transform.position = centerP2 + new Vector3 (seperatorIncrement / 2 * flip, sepHeight * -1.0f, 0);
-			}
-			spawnButton2.GetComponent<button>().matchedBeat = newBeat;
-			spawnButton2.GetComponent<button> ().Spawned (false);
+			placeButton(spawnButton2, centerP2, flip, count, newBeat, false);
 			player2.GetComponent<player_main> ().addButton (spawnButton2);
 			spawnButton2.transform.SetParent(player2.transform, true);
 
