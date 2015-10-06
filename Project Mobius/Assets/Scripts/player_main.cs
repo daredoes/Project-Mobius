@@ -12,6 +12,7 @@ public class player_main : MonoBehaviour
     public int buttonCount = 0;
 	public List<KeyCode> keys;
 	public List<GameObject> buttons;
+    public Dictionary<int, GameObject> buttonDict;
 
     // Before Start function
     void Awake()
@@ -27,6 +28,13 @@ public class player_main : MonoBehaviour
 
     void Update()
     {
+        for(int l = 0; l < keys.Count; l++)
+        {
+            if (Input.GetKeyDown(keys[l]))
+            {
+                buttonDict[l].GetComponent<button>().shootBar();
+            }
+        }
         
     }
 
@@ -108,8 +116,9 @@ public class player_main : MonoBehaviour
 
     public void addButton(GameObject butt)
     {
-        butt.GetComponent<button>().launch = keys[buttonCount];
+        //butt.GetComponent<button>().launch = keys[buttonCount];
         butt.GetComponent<button>().setText();
+        buttonDict.Add(buttonCount, butt);
         buttonCount++;
         buttons.Add(butt);
     }

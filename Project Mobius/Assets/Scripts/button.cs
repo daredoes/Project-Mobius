@@ -104,7 +104,7 @@ public class button : playableObject
         
 	}
 
-	void shootBar ()
+	public void shootBar ()
 	{
 		beatBar.GetComponent<beatBouncer> ().hit ();
 	}
@@ -139,9 +139,9 @@ public class button : playableObject
 	{
 		if (activated) {
 			if (!isAI) {
-				if (Input.GetKeyDown (launch)) {
+				/*if (Input.GetKeyDown (launch)) {
 					shootBar ();
-				}
+				} */
 
 				var touchCount = Input.touchCount;
 				for (var i = 0; i < touchCount; i++) {
