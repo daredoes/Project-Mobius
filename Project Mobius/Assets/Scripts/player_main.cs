@@ -80,8 +80,7 @@ public class player_main : MonoBehaviour
     public void isAI()
     {
         isai = true;
-
-       // player2Controls();
+        //player2Controls();
     }
 
     public void isPlayer1()
@@ -114,12 +113,12 @@ public class player_main : MonoBehaviour
         keys.Add(KeyCode.Quote);
     }
 
-    public void addButton(int count, GameObject butt)
+    public void addButton(GameObject butt)
     {
         //butt.GetComponent<button>().launch = keys[buttonCount];
         //butt.GetComponent<button>().setText();
-        buttonDict.Add(count, butt);
-        buttonCount++;
+        buttonDict.Add(buttonDict.Count, butt);
+        //buttonCount++;
         buttons.Add(butt);
     }
 }

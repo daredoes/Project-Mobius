@@ -268,23 +268,26 @@ public class GameManager : MonoBehaviour
 		player1.GetComponent<player_main> ().color = Color.green;
 		player2.GetComponent<player_main> ().color = Color.magenta;
 
-		//Set player1 as human
-		player1.GetComponent<player_main> ().isPlayer1 ();
-		player2.GetComponent<player_main> ().isPlayer2 ();
-
+		
 		//Choose player2 through mode select
-		if (singlePlayer) {
-			//player1.GetComponent<player_main> ().isPlayer1 ();
-			player2.GetComponent<player_main> ().isAI ();
-		} else if (localMultPlayer) {
-            //player1.GetComponent<player_main> ().isPlayer1();
-			//player2.GetComponent<player_main> ().isPlayer2 ();
+		if (singlePlayer)
+        {
+            //Set player1 as human
+            player1.GetComponent<player_main>().isPlayer1();
+            player2.GetComponent<player_main>().isAI();
+            player2.GetComponent<player_main> ().isPlayer2 ();
+        }
+        else if (localMultPlayer)
+        {
+            player1.GetComponent<player_main> ().isPlayer1();
+			player2.GetComponent<player_main> ().isPlayer2 ();
 		}
 
-
 		//Spawn Buttons and Beats
-		for (int i = 0; i < buttonAmount; i++) {
+		for (int i = 0; i < buttonAmount; i++)
+        {
 			GameObject newBeat = (GameObject)Instantiate (beat);
+
 			if (i < 3) {
 				newBeat.transform.position = centerPos + new Vector2 (seperatorIncrement * flip * count, 0);
 				newBeat.GetComponent<beat_init> ().travelLength = travelLength;
@@ -298,15 +301,18 @@ public class GameManager : MonoBehaviour
 			GameObject spawnButton1 = (GameObject)Instantiate (button);
 			placeButton (spawnButton1, centerP1, flip, count, newBeat, true, i);
             spawnButton1.transform.SetParent(player1.transform, true);
-            player1.GetComponent<player_main> ().addButton (i,spawnButton1);
-			
-			GameObject spawnButton2 = (GameObject)Instantiate (button);
+            player1.GetComponent<player_main> ().addButton (spawnButton1);
+
+            GameObject spawnButton2 = (GameObject)Instantiate (button);
 			placeButton (spawnButton2, centerP2, flip, count, newBeat, false, i);
             spawnButton2.transform.SetParent(player2.transform, true);
-            player2.GetComponent<player_main> ().addButton (i,spawnButton2);
+            player2.GetComponent<player_main> ().addButton (spawnButton2);
 
-			//Stop collision between beat and buttons
-			Physics2D.IgnoreCollision (newBeat.GetComponent<Collider2D> (), spawnButton1.GetComponent<Collider2D> (), true);
+
+            Debug.Log(spawnButton2);
+
+            //Stop collision between beat and buttons
+            Physics2D.IgnoreCollision (newBeat.GetComponent<Collider2D> (), spawnButton1.GetComponent<Collider2D> (), true);
 			Physics2D.IgnoreCollision (newBeat.GetComponent<Collider2D> (), spawnButton2.GetComponent<Collider2D> (), true);
 
 			//Alternate which side the button is placed on
