@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
 	public bool singlePlayer;
 	public bool localMultPlayer;
 	public bool online;
+	public bool demoMode;
 	//0 = easy | 1 = medium | 2 = hard
 	public int difficulty;
 	///////////////////////////////////////////////
@@ -268,19 +269,19 @@ public class GameManager : MonoBehaviour
 		player1.GetComponent<player_main> ().color = Color.green;
 		player2.GetComponent<player_main> ().color = Color.magenta;
 
+		player1.GetComponent<player_main> ().isPlayer1 ();
+		player2.GetComponent<player_main> ().isPlayer2 ();
+
 		
 		//Choose player2 through mode select
-		if (singlePlayer)
-        {
-            //Set player1 as human
-            player1.GetComponent<player_main>().isPlayer1();
-            player2.GetComponent<player_main>().isAI();
-            player2.GetComponent<player_main> ().isPlayer2 ();
-        }
-        else if (localMultPlayer)
-        {
-            player1.GetComponent<player_main> ().isPlayer1();
-			player2.GetComponent<player_main> ().isPlayer2 ();
+		if (singlePlayer) {
+			//Set player1 as human
+			player2.GetComponent<player_main> ().isAI ();
+		} else if (online) {
+
+		} else if (demoMode) {
+			player1.GetComponent<player_main>().isAI();
+			player2.GetComponent<player_main>().isAI();
 		}
 
 		//Spawn Buttons and Beats
@@ -305,7 +306,9 @@ public class GameManager : MonoBehaviour
 
             GameObject spawnButton2 = (GameObject)Instantiate (button);
 			placeButton (spawnButton2, centerP2, flip, count, newBeat, false, i);
+			Debug.Log(spawnButton2);
             spawnButton2.transform.SetParent(player2.transform, true);
+			Debug.Log(spawnButton2);
             player2.GetComponent<player_main> ().addButton (spawnButton2);
 
 

@@ -7,6 +7,7 @@ public class Prefs : MonoBehaviour
     public bool single;
     public bool local;
     public bool online;
+	public bool demoMode;
     
     void Awake()
     {
@@ -28,4 +29,9 @@ public class Prefs : MonoBehaviour
     {
         online = true;
     }
+
+	public void DemoMode()
+	{
+		demoMode = true;
+	}
 }

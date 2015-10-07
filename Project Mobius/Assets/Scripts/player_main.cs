@@ -12,7 +12,7 @@ public class player_main : MonoBehaviour
     public int buttonCount = 0;
 	public List<KeyCode> keys;
 	public List<GameObject> buttons;
-    public Dictionary<int, GameObject> buttonDict;
+    public Dictionary<int, GameObject> buttonDict = new Dictionary<int, GameObject>();
 
     // Before Start function
     void Awake()
@@ -119,6 +119,8 @@ public class player_main : MonoBehaviour
         //butt.GetComponent<button>().setText();
         buttonDict.Add(buttonDict.Count, butt);
         //buttonCount++;
-        buttons.Add(butt);
+		/////////////
+		/// IF IT RANDOMLY BREAKS UNCOMMENT THIS LINE
+        //buttons.Add(butt);
     }
 }
