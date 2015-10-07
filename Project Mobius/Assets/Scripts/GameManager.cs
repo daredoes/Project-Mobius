@@ -252,16 +252,6 @@ public class GameManager : MonoBehaviour
 	}
     #endregion
 
-	void placeButton (GameObject butt, Vector2 cPos, int flip, int count, GameObject newBeat, bool spawnBool, int i)
-	{
-		if (i < 3) {
-			butt.transform.position = cPos + new Vector2 (seperatorIncrement * flip * count, 0);
-		} else {
-			butt.transform.position = cPos + new Vector2 (seperatorIncrement / 2 * flip, sepHeight);
-		}
-		butt.GetComponent<button> ().matchedBeat = newBeat;
-		butt.GetComponent<button> ().Spawned (spawnBool);
-	}
 
     #region DRAW GAME SCENE METHOD
 	public void DrawScene (int buttonAmount, GameObject p1, GameObject p2)
@@ -284,9 +274,10 @@ public class GameManager : MonoBehaviour
 
 		//Choose player2 through mode select
 		if (singlePlayer) {
-			player1.GetComponent<player_main> ().isAI ();
+			player1.GetComponent<player_main> ().isPlayer1 ();
 			player2.GetComponent<player_main> ().isAI ();
 		} else if (localMultPlayer) {
+            player1.GetComponent<player_main> ().isPlayer1();
 			player2.GetComponent<player_main> ().isPlayer2 ();
 		}
 
@@ -306,14 +297,13 @@ public class GameManager : MonoBehaviour
 			
 			GameObject spawnButton1 = (GameObject)Instantiate (button);
 			placeButton (spawnButton1, centerP1, flip, count, newBeat, true, i);
-			player1.GetComponent<player_main> ().addButton (spawnButton1);
-			spawnButton1.transform.SetParent (player1.transform, true);
+            spawnButton1.transform.SetParent(player1.transform, true);
+            player1.GetComponent<player_main> ().addButton (i,spawnButton1);
 			
 			GameObject spawnButton2 = (GameObject)Instantiate (button);
-			//spawnButton2.transform.SetParent(buttonCanvas.transform);
 			placeButton (spawnButton2, centerP2, flip, count, newBeat, false, i);
-			player2.GetComponent<player_main> ().addButton (spawnButton2);
-			spawnButton2.transform.SetParent (player2.transform, true);
+            spawnButton2.transform.SetParent(player2.transform, true);
+            player2.GetComponent<player_main> ().addButton (i,spawnButton2);
 
 			//Stop collision between beat and buttons
 			Physics2D.IgnoreCollision (newBeat.GetComponent<Collider2D> (), spawnButton1.GetComponent<Collider2D> (), true);
@@ -336,6 +326,23 @@ public class GameManager : MonoBehaviour
 		//Scene Drawn
 		hasDrawnScene = true;
 	}
+
+
+    public void placeButton(GameObject butt, Vector2 cPos, int flip, int count, GameObject newBeat, bool spawnBool, int i)
+    {
+        if (i < 3)
+        {
+            butt.transform.position = cPos + new Vector2(seperatorIncrement * flip * count, 0);
+        }
+        else
+        {
+            butt.transform.position = cPos + new Vector2(seperatorIncrement / 2 * flip, sepHeight);
+        }
+        
+        butt.GetComponent<button>().Spawned(spawnBool);
+        butt.GetComponent<button>().matchedBeat = newBeat;
+    }
+
     #endregion
-	
+
 }

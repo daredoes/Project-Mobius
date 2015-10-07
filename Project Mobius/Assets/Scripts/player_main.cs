@@ -1,4 +1,4 @@
-	using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 public class player_main : MonoBehaviour
@@ -114,11 +114,11 @@ public class player_main : MonoBehaviour
         keys.Add(KeyCode.Quote);
     }
 
-    public void addButton(GameObject butt)
+    public void addButton(int count, GameObject butt)
     {
         //butt.GetComponent<button>().launch = keys[buttonCount];
-        butt.GetComponent<button>().setText();
-        buttonDict.Add(buttonCount, butt);
+        //butt.GetComponent<button>().setText();
+        buttonDict.Add(count, butt);
         buttonCount++;
         buttons.Add(butt);
     }
