@@ -274,11 +274,11 @@ public class GameManager : MonoBehaviour
 
 		//Choose player2 through mode select
 		if (singlePlayer) {
-			player1.GetComponent<player_main> ().isPlayer1 ();
+			//player1.GetComponent<player_main> ().isPlayer1 ();
 			player2.GetComponent<player_main> ().isAI ();
 		} else if (localMultPlayer) {
-            player1.GetComponent<player_main> ().isPlayer1();
-			player2.GetComponent<player_main> ().isPlayer2 ();
+            //player1.GetComponent<player_main> ().isPlayer1();
+			//player2.GetComponent<player_main> ().isPlayer2 ();
 		}
 
 
