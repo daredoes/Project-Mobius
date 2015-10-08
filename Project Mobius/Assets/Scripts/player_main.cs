@@ -39,19 +39,21 @@ public class player_main : MonoBehaviour
     }
 
 	public void pause(){
-		foreach(GameObject b in buttons){
+		foreach(GameObject b in buttonDict.Values){
 			b.GetComponent<button>().pause();
 		}
 	}
 
 	public void unpause(){
-		foreach(GameObject b in buttons){
+		foreach(GameObject b in buttonDict.Values)
+        {
 			b.GetComponent<button>().unpause();
 		}
 	}
 
 	public void pauseFlip(){
-		foreach(GameObject b in buttons){
+		foreach(GameObject b in buttonDict.Values)
+        {
 			b.GetComponent<button>().pauseFlip();
 		}
 	}
@@ -59,7 +61,7 @@ public class player_main : MonoBehaviour
     public void spawned()
     {
         Vector3 temp;
-        foreach(GameObject butt in buttons)
+        foreach(GameObject butt in buttonDict.Values)
         {
             butt.GetComponent<button>().color = color;
             butt.GetComponent<button>().claimed();
