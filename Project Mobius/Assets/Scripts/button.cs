@@ -48,8 +48,8 @@ public class button : playableObject
 		//Resize sprite
 		sprender.transform.localScale = sprender.transform.localScale + new Vector3 (scaler, scaler, scaler);
 		//Set display text
-		DisplayText = GetComponent<Text> ();
-		DisplayText.GetComponent<Renderer> ().sortingLayerID = transform.GetComponent<Renderer> ().sortingLayerID;
+		//DisplayText = GetComponent<Text> ();
+		//DisplayText.GetComponent<Renderer> ().sortingLayerID = transform.GetComponent<Renderer> ().sortingLayerID;
 	}
 
 	// Use this for initialization
